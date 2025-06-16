@@ -35,8 +35,8 @@ Almacenan estadísticas del jugador, habilidades, armas y enemigos por nivel par
 3. **Nombre completo:** [Diana Rebeca Ayala Jandres]  
    **Carnet:** [00021325]
 
-4. **Nombre completo:** [Gabriel Alejandro Guevara Rodríguez]  
-   **Carnet:** [00252225]
+4. **Nombre completo:** Gabriel Alejandro Guevara Rodríguez  
+   **Carnet:** 00252225
 
 ## Instrucciones de Ejecución
 
