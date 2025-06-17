@@ -1,5 +1,5 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/mi1WNrHU)
-# Proyecto de C++ - [The Lost City]
+# Proyecto de C++ The Lost City
 
 ## Descripción del Proyecto
 
@@ -22,21 +22,21 @@ Almacenan estadísticas del jugador, habilidades, armas y enemigos por nivel par
 
 ## Equipo
 
-- **Nombre del equipo:** [Ideatic]
+- **Nombre del equipo:** Ideatic
 
 ### Integrantes del equipo
 
-1. **Nombre completo:** [Amy Ariadna Barraza Villacorta]  
-   **Carnet:** [00012725]
+1. **Nombre completo:** Amy Ariadna Barraza Villacorta  
+   **Carnet:** 00012725
 
-2. **Nombre completo:** [Jaqueline Nicole Cardoza Maldonado]  
-   **Carnet:** [000252125]
+2. **Nombre completo:** Jaqueline Nicole Cardoza Maldonado  
+   **Carnet:** 000252125
 
-3. **Nombre completo:** [Diana Rebeca Ayala Jandres]  
-   **Carnet:** [00021325]
+3. **Nombre completo:** Diana Rebeca Ayala Jandres  
+   **Carnet:** 00021325
 
-4. **Nombre completo:** [Gabriel Alejandro Guevara Rodríguez]  
-   **Carnet:** [00252225]
+4. **Nombre completo:** Gabriel Alejandro Guevara Rodríguez  
+   **Carnet:** 00252225
 
 ## Instrucciones de Ejecución
 
