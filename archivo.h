@@ -1,8 +1,12 @@
 #ifndef MOVER_H
 #define MOVER_H
 
+#include <curses.h>
+
 // Declaración de la función para mover al personaje dentro de los límites del área de juego
 void mover_personaje(int &x, int &y, int ch, int ancho, int alto);
+// Declaración de la función para espadazo
+void espadaso(WINDOW *win, int x, int y, int last_dir);
 
 #endif
 
@@ -23,29 +27,50 @@ void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
     else if (ch == KEY_RIGHT && x < ancho - 2)
         x++;
 }
+// Dibuja una espada al lado del personaje según la dirección
+void espadaso(WINDOW *win, int x, int y, int last_dir)
+{
+    // last_dir es la última dirección (KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT)
+    if (last_dir == KEY_UP)
+        mvwaddch(win, y - 1, x, '|'); // Espada arriba
+    else if (last_dir == KEY_DOWN)
+        mvwaddch(win, y + 1, x, '|'); // Espada abajo
+    else if (last_dir == KEY_LEFT)
+        mvwprintw(win, y, x - 2, "--"); // Para izquierda
+    else                                // Derecha por defecto
+        mvwprintw(win, y, x + 1, "--"); // Para derecha
+}
+// Función para mostrar corazones (vidas) en la parte superior de la ventana
+void mostrar_corazones(WINDOW *win, int vidas)
+{
+    // Dibuja hasta 3 corazones en la esquina superior izquierda
+    wattron(win, COLOR_PAIR(5)); // Activa color rojo
+    for (int i = 0; i < vidas; i++)
+    {
+        mvwaddch(win, 0, 2 + i * 2, '*'); // Se puese usar '*' o 'O' o '<3'
+    }
+    wattroff(win, COLOR_PAIR(5)); // Desactiva color rojo
+}
 
 // Matrices para las posturas del personaje según la dirección (3x3)
 // Cada matriz representa una postura diferente
 char personaje_up[3][3] = {
-    {' ', 'O', ' '},   // Cabeza
-    {'/', '|', '\\'},  // Brazos y torso
-    {' ', '^', ' '}    // Piernas levantadas
+    {' ', 'O', ' '},  // Cabeza
+    {'/', '|', '\\'}, // Brazos y torso
+    {' ', '^', ' '}   // Piernas levantadas
 };
 char personaje_down[3][3] = {
     {' ', 'O', ' '},
     {'/', '|', '\\'},
-    {'/', ' ', '\\'}
-};
+    {'/', ' ', '\\'}};
 char personaje_left[3][3] = {
     {' ', 'O', ' '},
     {'/', '|', '-'},
-    {'/', ' ', ' '}
-};
+    {'/', ' ', ' '}};
 char personaje_right[3][3] = {
     {' ', 'O', ' '},
     {'-', '|', '\\'},
-    {' ', ' ', '\\'}
-};
+    {' ', ' ', '\\'}};
 
 // Arte ASCII de un caballero (5x5)
 // Cada string representa una fila del caballero
@@ -62,6 +87,5 @@ struct Bola
     int x, y;
     int dx, dy; // Dirección de la bola
     bool activa;
-    int frame;  // Contador para controlar la velocidad
-
+    int frame; // Contador para controlar la velocidad
 };

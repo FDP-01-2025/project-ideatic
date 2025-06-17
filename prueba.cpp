@@ -12,6 +12,7 @@ int main()
     int x = MAP_WIDTH / 2, y = MAP_HEIGHT - 2; // Posición inicial del jugador (@)
     int ch, game_over = 0;                     // Variable para almacenar la tecla presionada
     int last_dir = KEY_RIGHT;                  // direccion del personaje por defecto la derecha
+    int vidas = 3;                             // El personaje inicia con 3 corazones
 
     // Arreglo de bolas
     Bola bolas[MAX_BOLAS];
@@ -34,14 +35,17 @@ int main()
     start_color();
     init_pair(2, COLOR_YELLOW, COLOR_BLACK); // Color del personaje
     init_pair(4, COLOR_BLUE, COLOR_BLACK);   // Color de la bola
+    init_pair(5, COLOR_RED, COLOR_BLACK); // Color rojo para corazones
 
     while (!game_over)
     {
-        werase(gamewin);    // Limpia la ventana de juego
-        box(gamewin, 0, 0); // Dibuja el borde
-        clear();            // Limpia la pantalla antes de dibujar
+        werase(gamewin);                   // Limpia la ventana de juego
+        box(gamewin, 0, 0);                // Dibuja el borde
+        clear();                           // Limpia la pantalla antes de dibujar
 
         mvwaddch(gamewin, y, x, '@' | COLOR_PAIR(2));
+
+        mostrar_corazones(gamewin, vidas); // Mostrar corazones (vidas) en la ventana
 
         // Dibuja todas las bolas activas
         for (int i = 0; i < MAX_BOLAS; i++)
@@ -62,6 +66,12 @@ int main()
         {
             mover_personaje(x, y, ch, MAP_WIDTH, MAP_HEIGHT);
             last_dir = ch; // Guarda la última dirección
+        }
+        if (ch == 'x' || ch == 'X')
+        {
+            espadaso(gamewin, x, y, last_dir); // Dibuja la espada según la dirección
+            wrefresh(gamewin);
+            napms(120); // Pequeña pausa para mostrar el espadazo
         }
 
         // Lanza una nueva bola en la dirección del último movimiento
