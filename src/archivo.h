@@ -4,7 +4,7 @@
 #include <curses.h>
 
 // Declaración de la función para mover al personaje dentro de los límites del área de juego
-void mover_personaje(int &x, int &y, int ch, int ancho, int alto);
+// void mover_personaje(int &x, int &y, int ch, int ancho, int alto);
 // Declaración de la función para espadazo
 void espadaso(WINDOW *win, int x, int y, int last_dir);
 
@@ -14,6 +14,7 @@ void espadaso(WINDOW *win, int x, int y, int last_dir);
 // Recibe referencias a x e y, la tecla presionada y los límites del área de juego
 void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
 {
+    
     // Mueve hacia arriba si no sale del borde superior
     if (ch == KEY_UP && y > 1)
         y--;
