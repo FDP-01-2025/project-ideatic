@@ -4,9 +4,9 @@
             "name": "Win32",
             // "includePath": [
             //     "${workspaceFolder}/**"
-            // ],
+            // ];
             "includePath": [
-                "C:/Users/yaqui/Downloads/UCA/Fundamentos progra/PDCurses-3.8/PDCurses-3.8",
+                "C:/Users/diana/OneDrive/Escritorio/Universidad/PDCurses-3.8",
                 "${workspaceFolder}/**"
             ],
             "defines": [

@@ -44,23 +44,27 @@ Almacenan estadísticas del jugador, habilidades, armas y enemigos por nivel par
    ```bash
    git clone [URL del repositorio]
 
+# Nivel 1: Villano de agua
+El aventurero inicia el nivel al adentrarse dentro de la piramide, donde al entrar se encuentrará atrapado en un laberinto, en este nivel el aventurero tendrá que evitar las burbujas que salen de en medio de las paredes hasta llegar al final del nivel, donde tendrá que enfrentarse con el guardian de agua que cuida la entrada al siguiente nivel. Durante el transcurso del nivel se mostrarán tres acertijos que deberá resolver para lograr avanzar.
 
-
-
-
+## Mecánica principal:
+- Movimiento con flechas.
+- Esquivar burbujas.
+- Resolver acertijos para avanzar el nivel.
+- Derrotar al guardían de agua.
 
 
 # Nivel 2: El Derrumbe
 
 El aventurero sigue dentro de una pirámide, debe resolver acertijos y escapar mientras la pirámide se derrumba y enfrentar al Hombre de arena, evitando obstáculos y su perdida.
 
-## Mecánica principal
+## Mecánica principal:
 - Movimiento con flechas.
 - Esquivar rocas y enredaderas, y liberarse de ellas.
 - Resolver acertijos que afectan el desarrollo del nivel.
 - Combatir enemigos, especialmente al principal Hombre de Arena.
 
-## Aplicación de temas 
+## Aplicación de temas:
 
 - **Variables:** Se utilizan para almacenar y actualizar datos clave como la posición (coordenadas X, Y) del jugador y su vida actual y el tiempo transcurrido durante el nivel.
 
