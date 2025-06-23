@@ -1,4 +1,5 @@
 #include <curses.h>
+<<<<<<< HEAD
 #include "src/archivo.h"
 #include "src/torre.h"
 #include <stdlib.h>
@@ -171,3 +172,14 @@ int main()
     endwin();
     return 0;
 }
+=======
+
+int main() {
+    initscr();
+    printw("¡Hola desde PDCurses!");
+    refresh();
+    getch();
+    endwin();
+    return 0;
+}
+>>>>>>> d25b61f (Cambios nivel 2)
