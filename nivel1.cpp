@@ -51,4 +51,27 @@ void gLabyrinth(int rows, int columns, int density) //base function to adjust th
                 matriz[mr[ran] + (rw - mr[ran]) / 2][mc[ran] + (cl - mc[ran]) / 2] = 1;
             }
         }
-    }             
+    }
+    // add density to the walls
+    for (int e = 0; e < rows; e++)
+    {
+        for (int f = 0; f < columns; f++)
+        {
+            if (matriz[e][f] == 1)
+            {
+                char x = 178;
+                cout << x <<x;
+                //cout << "1 "; // 1 will be displayed if the matrix is ​​equal to 1, this will be what will represent the walls of the maze.
+            }
+            if (matriz[e][f] == 0)
+            {
+            cout << "  "; }
+        }
+        cout << "\n";
+    }
+}
+    int main()
+    {
+        gLabyrinth(15, 50, 150); //labyrinth values.
+        return 0;
+    }        
