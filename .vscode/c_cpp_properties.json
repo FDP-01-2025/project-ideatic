@@ -6,7 +6,7 @@
             //     "${workspaceFolder}/**"
             // ],
             "includePath": [
-                "C:/Users/yaqui/Downloads/UCA/Fundamentos progra/PDCurses-3.8/PDCurses-3.8",
+                "C:/Users/gabri/Downloads/PDCurses/PDCurses",
                 "${workspaceFolder}/**"
             ],
             "defines": [
