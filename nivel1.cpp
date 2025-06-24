@@ -1,5 +1,4 @@
 #include <iostream>
-#include <studio.h>
 #include <ctime> //para generar valores aleatorios, en este caso, los laberintos xd.
 using namespace std;
 
