@@ -95,7 +95,23 @@ int ch;
         if (ch == KEY_DOWN  && laberinto[py+1][px] == 0) py++;
         if (ch == KEY_LEFT  && laberinto[py][px-1] == 0) px--;
         if (ch == KEY_RIGHT && laberinto[py][px+1] == 0) px++;
-        
+    
+        // to draw the character in a new position
+        mvwaddch(lab_win, py+1, px+1, '@');
+        wrefresh(lab_win);
+
+        mvwprintw(lab_win, 0, 2, "Tecla: %d   ", ch);
+        wrefresh(lab_win);
+
+        napms(50);
+    }
+    for (int i = 0; i < rows; i++)
+        delete[] laberinto[i];
+    delete[] laberinto;
+
+    delwin(lab_win);
+    endwin();
+    return 0;
 
     
 
