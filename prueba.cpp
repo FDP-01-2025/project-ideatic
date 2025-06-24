@@ -28,6 +28,7 @@ void gLabyrinth(WINDOW* win, int rows, int columns, int density, int **&matriz)
         for (int b = 0; b < columns; b++)
             matriz[a][b] = (a == 0 || b == 0 || a == rows-1 || b == columns-1) ? 1 : 0;
 
+            
     // Genera paredes internas aleatorias para el laberinto
     srand(time(NULL));
     for (int c = 0; c < density; c++)
