@@ -96,27 +96,27 @@ void mostrarLaberinto() {
 }
 
 int main() {
-    initscr();
-    noecho();
+    initscr();// una rama de la biblioteca
+    noecho();// evita que se vea la tecla que ponen 
     keypad(stdscr, TRUE);
-    curs_set(0);
+    curs_set(0);// esconde el sursos en la pantalla 
 
-    int px = 15, py = 12;
-    int ch;
+    int px = 15, py = 12;//variables que guardan posiciones en la pantallaa
+    int letra;
 
     while (true) {
         clear();
-        dibujarPiramide();
-        mvprintw(py, px, "A");
-        refresh();
+        dibujarPiramide();//llama a la funcion 
+        mvprintw(py, px, "A");// mueve el personale que es "A" en los ejes que queramos o lugares donde sea 
+        refresh();// para trabajar en la pantalla completa sin escribir algo 
 
-        ch = getch();
-        if (ch == KEY_UP) py--;
-        else if (ch == KEY_DOWN) py++;
-        else if (ch == KEY_LEFT) px--;
-        else if (ch == KEY_RIGHT) px++;
+        letra = getch();// todo esto digamos que es como los cuadrantes de x y que dependiendo de la posision se mueve el muneqito
+        if (letra == KEY_UP) py--;
+        else if (letra == KEY_DOWN) py++;
+        else if (letra == KEY_LEFT) px--;
+        else if (letra == KEY_RIGHT) px++;
 
-        // detectar si toca cualquier parte de la pirámide y empeiza el juegp
+        // detectar si toca cualquier parte de la pirámide y empeiza el juego
         char simbolo = mvinch(py, px) & A_CHARTEXT;
 
         if (simbolo == '*') { // Si toca cualquier parte de la pirámide
