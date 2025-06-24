@@ -43,3 +43,31 @@ void gLabyrinth(WINDOW* win, int rows, int columns, int density, int **&matriz)
             }
         }
     }
+// Draw the maze in the curses window (+1 to leave the border)
+    for (int e = 0; e < rows; e++)
+        for (int f = 0; f < columns; f++)
+            if (matriz[e][f] == 1)
+                mvwaddch(win, e+1, f+1, 178); // Pared
+            else
+                mvwaddch(win, e+1, f+1, ' '); // Espacio
+}
+int main()
+{
+    initscr();
+    noecho();
+    cbreak();
+    keypad(stdscr, TRUE); // enables arrows in the main window
+
+    int rows = MAP_HEIGHT, columns = MAP_WIDTH, density = DENSITY;
+    int **laberinto = nullptr;
+
+    // create labyrinth window
+    int startx = (COLS - columns) / 2;
+    int starty = (LINES - rows) / 2;
+    WINDOW *lab_win = newwin(rows+2, columns+2, starty, startx);
+    keypad(lab_win, TRUE); // enables arrows inlab_win
+    box(lab_win, 0, 0);
+
+    
+
+
