@@ -67,7 +67,22 @@ int main()
     WINDOW *lab_win = newwin(rows+2, columns+2, starty, startx);
     keypad(lab_win, TRUE); // enables arrows inlab_win
     box(lab_win, 0, 0);
+    // generates and draws the labyrinth
+    gLabyrinth(lab_win, rows, columns, density, laberinto);
+    wrefresh(lab_win);
 
+    // Find a free cell for the character (in the maze matrix)
+    int px = 1, py = 1;
+    for (int y = 1; y < rows-1; y++) {
+        for (int x = 1; x < columns-1; x++) {
+            if (laberinto[y][x] == 0) {
+                py = y;
+                px = x;
+                goto found; //to get out of two loops
+            }
+        }
+    }
+found:
     
 
 
