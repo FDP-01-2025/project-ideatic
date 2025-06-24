@@ -83,6 +83,20 @@ int main()
         }
     }
 found:
+int ch;
+    nodelay(lab_win, TRUE);
+
+    while ((ch = wgetch(lab_win)) != 'q') {
+        // This will delete the character from the previous position.
+        mvwaddch(lab_win, py+1, px+1, ' ');
+
+        // Movement with arrows, only if the cell is not a wall
+        if (ch == KEY_UP    && laberinto[py-1][px] == 0) py--;
+        if (ch == KEY_DOWN  && laberinto[py+1][px] == 0) py++;
+        if (ch == KEY_LEFT  && laberinto[py][px-1] == 0) px--;
+        if (ch == KEY_RIGHT && laberinto[py][px+1] == 0) px++;
+        
+
     
 
 
