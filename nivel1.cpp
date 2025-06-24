@@ -29,4 +29,26 @@ void gLabyrinth(int rows, int columns, int density) //base function to adjust th
                 matriz[a][b] = 0;
             }
         }
+    }
+    creation of the labyrinth
+    srand(time(NULL)); // It will be used to generate new values ​​for the rows or variables each time the program is run.
+    for (int c = 0; c < density; c++)
+    {
+        int cl = rand() % (columns - 4) + 2;
+        cl = (cl /2) * 2;
+        int rw = rand() % (rows - 4) + 2;
+        rw = (rw /2) * 2;
+        matriz[rw][cl] = 1;
+        for (int d = 0; d < walls; d++)
+        {
+            int mc[4] = {cl, cl, cl + 2, cl - 2}; // length for the columns, the last two values ​​correspond to when the rows remain at 0 and vice versa for the columns.
+            int mr[4] = {rw + 2, rw - 2, rw, rw}; // lenght for the rows.
+            int ran = rand() % 4; //ran=random numbers
+
+            if (matriz[mr[ran]][mc[ran]] == 0)
+            {
+                matriz[mr[ran]][mc[ran]] = 1;
+                matriz[mr[ran] + (rw - mr[ran]) / 2][mc[ran] + (cl - mc[ran]) / 2] = 1;
+            }
+        }
     }             
