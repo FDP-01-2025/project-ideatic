@@ -2,12 +2,32 @@
 #include <curses.h>
 #ifndef MOVER_H
 #define MOVER_H
+int x = 10, y = 5;
+int coin_x, coin_y;
+int ch, score = 0;
+
+void espadaso(WINDOW *win, int x, int y, int last_dir); 
+
+
+void inicial()
+{
+
+    // Inicializa la pantalla y colores
+    initscr();
+    noecho();
+    curs_set(0);
+    keypad(stdscr, TRUE);
+    srand(time(NULL));
+
+    // Posición inicial de la moneda
+    coin_x = rand() % (COLS - 2) + 1;
+    coin_y = rand() % (LINES - 2) + 1;
+}
 
 // Definición de la función para mover al personaje
 // Recibe referencias a x e y, la tecla presionada y los límites del área de juego
 void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
 {
-
     // Mueve hacia arriba si no sale del borde superior
     if (ch == KEY_UP && y > 1)
         y--;
@@ -21,3 +41,58 @@ void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
     else if (ch == KEY_RIGHT && x < ancho - 2)
         x++;
 }
+
+void puntos()
+{
+    int last_dir = KEY_RIGHT; // Inicializa la dirección
+
+    while (1)
+    {
+        clear();
+        box(stdscr, 0, 0);
+        mvprintw(0, 2, "Recoge monedas ($) con '@'. Puntos: %d | 'q' para salir", score);
+        mvaddch(coin_y, coin_x, '$');
+        mvaddch(y, x, '@');
+        refresh();
+
+        ch = getch();
+        if (ch == 'q'|| ch == 'Q')
+            break;
+
+        // Guarda la última dirección si se mueve
+        if (ch == KEY_UP || ch == KEY_DOWN || ch == KEY_LEFT || ch == KEY_RIGHT)
+            last_dir = ch;
+
+        // Ataca con la espada si se presiona 'x' o 'X'
+        if (ch == 'x' || ch == 'X') {
+            espadaso(stdscr, x, y, last_dir);
+            refresh();
+            napms(120); // Pausa para mostrar la espada
+        }
+
+        mover_personaje(x, y, ch, COLS, LINES);
+
+        if (x == coin_x && y == coin_y)
+        {
+            score++;
+            coin_x = rand() % (COLS - 2) + 1;
+            coin_y = rand() % (LINES - 2) + 1;
+        }
+    }
+
+    endwin();
+}
+// Dibuja una espada al lado del personaje según la dirección
+void espadaso(WINDOW *win, int x, int y, int last_dir)
+{
+    // last_dir es la última dirección (KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT)
+    if (last_dir == KEY_UP)
+        mvwaddch(win, y - 1, x, '|'); // Dibuja la espada arriba del personaje
+    else if (last_dir == KEY_DOWN)
+        mvwaddch(win, y + 1, x, '|'); // Dibuja la espada abajo del personaje
+    else if (last_dir == KEY_LEFT)
+        mvwprintw(win, y, x - 2, "--"); // Dibuja la espada a la izquierda del personaje
+    else // Derecha por defecto
+        mvwprintw(win, y, x + 1, "--"); // Dibuja la espada a la derecha del personaje
+}
+#endif
