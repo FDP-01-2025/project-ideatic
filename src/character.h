@@ -1,13 +1,14 @@
 #include <iostream>
 #include <curses.h>
-#ifndef MOVER_H
+#include <ctime>
+#include "ball.h" // Incluye el header de bolas
+
 #define MOVER_H
 int x = 10, y = 5;
 int coin_x, coin_y;
 int ch, score = 0;
 
-void espadaso(WINDOW *win, int x, int y, int last_dir); 
-
+void espadaso(WINDOW *win, int x, int y, int last_dir);
 
 void inicial()
 {
@@ -16,7 +17,11 @@ void inicial()
     initscr();
     noecho();
     curs_set(0);
+    start_color();
+    init_pair(2, COLOR_YELLOW, COLOR_BLACK); // Color del personaje
+    init_pair(3, COLOR_CYAN, COLOR_BLACK);   // color de la espada
     keypad(stdscr, TRUE);
+    nodelay(stdscr, TRUE);
     srand(time(NULL));
 
     // Posición inicial de la moneda
@@ -44,7 +49,8 @@ void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
 
 void puntos()
 {
-    int last_dir = KEY_RIGHT; // Inicializa la dirección
+    int last_dir = KEY_RIGHT;   // Inicializa la dirección
+    Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
 
     while (1)
     {
@@ -52,22 +58,31 @@ void puntos()
         box(stdscr, 0, 0);
         mvprintw(0, 2, "Recoge monedas ($) con '@'. Puntos: %d | 'q' para salir", score);
         mvaddch(coin_y, coin_x, '$');
-        mvaddch(y, x, '@');
+        wattron(stdscr, COLOR_PAIR(2));  // Activa el color (por ejemplo, amarillo)
+        mvaddch(y, x, '@');              // Dibuja el personaje con color
+        wattroff(stdscr, COLOR_PAIR(2)); // Desactiva el color
+
+        update_balls(stdscr, balls, MAX_BALLS, COLS, LINES);
+
         refresh();
 
         ch = getch();
-        if (ch == 'q'|| ch == 'Q')
+        if (ch == 'q' || ch == 'Q')
             break;
-
+        if (ch == ' ')
+        {
+            shoot_ball(balls, MAX_BALLS, x, y, last_dir);
+        }
         // Guarda la última dirección si se mueve
         if (ch == KEY_UP || ch == KEY_DOWN || ch == KEY_LEFT || ch == KEY_RIGHT)
             last_dir = ch;
 
         // Ataca con la espada si se presiona 'x' o 'X'
-        if (ch == 'x' || ch == 'X') {
+        if (ch == 'x' || ch == 'X')
+        {
             espadaso(stdscr, x, y, last_dir);
-            refresh();
-            napms(120); // Pausa para mostrar la espada
+            // refresh();
+            // napms(120); // Pausa para mostrar la espada
         }
 
         mover_personaje(x, y, ch, COLS, LINES);
@@ -85,6 +100,7 @@ void puntos()
 // Dibuja una espada al lado del personaje según la dirección
 void espadaso(WINDOW *win, int x, int y, int last_dir)
 {
+    wattron(win, COLOR_PAIR(3)); // Activa color cian
     // last_dir es la última dirección (KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT)
     if (last_dir == KEY_UP)
         mvwaddch(win, y - 1, x, '|'); // Dibuja la espada arriba del personaje
@@ -92,7 +108,10 @@ void espadaso(WINDOW *win, int x, int y, int last_dir)
         mvwaddch(win, y + 1, x, '|'); // Dibuja la espada abajo del personaje
     else if (last_dir == KEY_LEFT)
         mvwprintw(win, y, x - 2, "--"); // Dibuja la espada a la izquierda del personaje
-    else // Derecha por defecto
+    else                                // Derecha por defecto
         mvwprintw(win, y, x + 1, "--"); // Dibuja la espada a la derecha del personaje
+    wattroff(win, COLOR_PAIR(3));       // Desactiva color cian
+
+    refresh();
+    napms(120); // Pausa para mostrar la espada
 }
-#endif
