@@ -1,15 +1,16 @@
-#include <curses.h>
-#include <ctime>
-#include <cstdlib>
+#ifndef MUSIC_H
+#define MUSIC_H
+
 #include <windows.h>
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 
 void reproducirFondo() {
-    PlaySound("music/exploration.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+    PlaySound("music/Musicafondo.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 }
 
-void reproducirVictoria() {
-    PlaySound(NULL, 0, 0); // Detiene fondo
-    PlaySound("music/Ganaste.wav", NULL, SND_FILENAME | SND_SYNC);
+void reproducirMoneda() {
+    PlaySound("music/coin.wav", NULL, SND_FILENAME | SND_ASYNC);
 }
+
+#endif // MUSIC_H

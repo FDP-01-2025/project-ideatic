@@ -62,6 +62,7 @@ bool cargar_partida(const char* filename, int &x, int &y, int &score, Ball balls
 // 1 = Nueva partida, 2 = Cargar partida, 3 = Salir
 int menu()
 {
+    reproducirFondo();
     printw("==== MENU ====\n");
     printw("1. New Game\n");
     printw("2. Load Game\n");

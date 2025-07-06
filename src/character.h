@@ -30,7 +30,7 @@ void inicial()
     // Posición inicial de la moneda
     coin_x = rand() % (COLS - 2) + 1;
     coin_y = rand() % (LINES - 2) + 1;
-    reproducirFondo();
+    // reproducirFondo();
 }
 
 // Definición de la función para mover al personaje
@@ -91,8 +91,10 @@ void puntos()
 
         mover_personaje(x, y, ch, COLS, LINES);
 
-        if (x == coin_x && y == coin_y)
-        {
+        if (x == coin_x && y == coin_y) {
+            reproducirMoneda(); // Reproduce el sonido de la moneda
+            napms(500);         // Pausa breve para permitir que el sonido de la moneda se reproduzca
+            reproducirFondo();  // Reanuda el sonido de fondo
             score++;
             coin_x = rand() % (COLS - 2) + 1;
             coin_y = rand() % (LINES - 2) + 1;
