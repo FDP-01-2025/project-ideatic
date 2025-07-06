@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include <windows.h>
 using namespace std;
 
 
@@ -31,12 +32,11 @@ void mensajeOscuridad() {
         cout << "\n\n";
         for (char c : mensaje[l]) {
             cout << c << flush;
-            esperar(60); // velocidad de escritura
+            esperar(40); // velocidad de escritura
         }
-        esperar(1500); // pausa entre líneas
+        esperar(800); // pausa entre líneas
     }
-
-    esperar(2000); // espera final antes de iniciar el laberinto
+    esperar(150); // espera final antes de iniciar el laberinto
     limpiarPantalla();
 }
 
@@ -99,6 +99,7 @@ void gLabyrinthLevel2() {
 }
 
 int main() {
+    mensajeOscuridad();
     gLabyrinthLevel2();
     return 0;
 }
