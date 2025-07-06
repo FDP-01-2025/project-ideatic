@@ -4,7 +4,6 @@
 #include <windows.h>
 using namespace std;
 
-
 // espera para que salgan las letras 
 void esperar(int milisegundos) {
     Sleep(milisegundos);
@@ -39,6 +38,27 @@ void mensajeOscuridad() {
     esperar(150); // espera final antes de iniciar el laberinto
     limpiarPantalla();
 }
+
+void mostrarAdvertenciaLaberinto() {
+    void esperar(int milisegundos);
+void limpiarPantalla();
+void mostrarAdvertenciaLaberinto();
+
+    cout << "\n\n";
+    cout << "╔══════════════════════════════════════════════════════════════════════╗\n";
+    cout << "║                         ⚠ ADVERTENCIA ⚠                              ║\n";
+    cout << "║                                                                      ║\n";
+    cout << "║             Este lugar no fue hecho para los vivos.                  ║\n";
+    cout << "║               El polvo que pisas... lo alimenta.                     ║\n";
+    cout << "║                                                                      ║\n";
+    cout << "║                 Él despierta con cada error.                         ║\n";
+    cout << "║                                                                      ║\n";
+    cout << "║            Cada error no te aleja... te acerca.                      ║\n";
+    cout << "╚══════════════════════════════════════════════════════════════════════╝\n";
+    esperar(3000); // 3 segundos de pausa para leer
+    limpiarPantalla(); // limpiar antes del laverinto
+}
+
 
 const int ROWS = 15;
 const int COLUMNS = 60;
@@ -89,9 +109,9 @@ void gLabyrinthLevel2() {
     for (int e = 0; e < ROWS; e++) {
     for (int f = 0; f < COLUMNS; f++) {
         if (matriz[e][f] == 1) {
-            cout << "██"; // uros del laberinto
+            cout << "██"; // muros del laberinto
         } else {
-            cout << "░░"; // El polvo del nivel 2 
+            cout << "░░"; // el polvo del nivel 2 
         }
     }
     cout << "\n";
@@ -100,6 +120,7 @@ void gLabyrinthLevel2() {
 
 int main() {
     mensajeOscuridad();
+    mostrarAdvertenciaLaberinto();
     gLabyrinthLevel2();
     return 0;
 }
