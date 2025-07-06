@@ -23,6 +23,11 @@ void showmenu()
     cout << "|        4. Save game         |" << endl;
     cout << "|-----------------------------|" << endl;
 }
+void level1()
+{
+    cout << "|           LEVEL 1           |" << endl;
+    cout << "Use the rows to move and space to jump" << endl;
+}
 void generatelab(int matriz[rows][columns], int density)
 {
     int walls = density * 8;
@@ -73,7 +78,7 @@ void showlabyrinth(int matriz[rows][columns])
         {
             if (matriz[i][j] == 1)
             {
-                cout << "||" << endl;
+                cout << " | " << endl;
             }
             else
             {
@@ -83,6 +88,7 @@ void showlabyrinth(int matriz[rows][columns])
         cout << endl;
     }
 }
+
 int main()
 {
     int lab[rows][columns];
@@ -93,10 +99,16 @@ int main()
     homescreen();
     showmenu();
     int option;
-    cout << "Select a option to continue: ";
+    cout << "Select a option to continue:  ";
     cin >> option;
-   // switch (showmenu){
-    return option;
+
+    switch (option)
+    {
+    case 1:
+        level1();
+        break;
+    
+    }
     generatelab(lab, 5);
     showlabyrinth(lab);
     return 0;
