@@ -2,11 +2,13 @@
 #include <curses.h>
 #include <ctime>
 #include "ball.h" // Incluye el header de bolas
+#include "save_game.h"
 
 #define MOVER_H
 int x = 10, y = 5;
 int coin_x, coin_y;
 int ch, score = 0;
+Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
 
 void espadaso(WINDOW *win, int x, int y, int last_dir);
 
@@ -49,8 +51,8 @@ void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
 
 void puntos()
 {
-    int last_dir = KEY_RIGHT;   // Inicializa la dirección
-    Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
+    int last_dir = KEY_RIGHT; // Inicializa la dirección
+    // Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
 
     while (1)
     {
@@ -93,6 +95,20 @@ void puntos()
             coin_x = rand() % (COLS - 2) + 1;
             coin_y = rand() % (LINES - 2) + 1;
         }
+    }
+
+    // Menú de confirmación para guardar partida al salir
+    nodelay(stdscr, FALSE); // Asegura que getch espere la entrada
+    clear();
+    printw("Do you want to save the game? (y/n): ");
+    refresh();
+    int save_opt = getch();
+    if (save_opt == 'y' || save_opt == 'Y')
+    {
+        save_game("save.txt", x, y, score, balls, MAX_BALLS);
+        printw("\nGame saved!\n");
+        refresh();
+        napms(1000);
     }
 
     endwin();
