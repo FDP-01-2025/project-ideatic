@@ -122,5 +122,6 @@ int main() {
     mensajeOscuridad();
     mostrarAdvertenciaLaberinto();
     gLabyrinthLevel2();
+    SetConsoleOutputCP(CP_UTF8);
     return 0;
 }
