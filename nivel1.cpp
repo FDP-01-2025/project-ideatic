@@ -78,7 +78,7 @@ void showlabyrinth(int matriz[rows][columns])
         {
             if (matriz[i][j] == 1)
             {
-                cout << " | " << endl;
+                cout << "|" << endl;
             }
             else
             {
