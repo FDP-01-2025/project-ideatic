@@ -65,24 +65,6 @@ void generatelab(int matriz[rows][columns], int density)
         }
     }
 }
-void showlabyrinth(int matriz[rows][columns])
-{
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < columns; j++)
-        {
-            if (matriz[i][j] == 1)
-            {
-                cout << "||" << endl;
-            }
-            else
-            {
-                cout << " ";
-            }
-        }
-        cout << endl;
-    }
-}
 int main()
 {
     int lab[rows][columns];
@@ -98,6 +80,6 @@ int main()
    // switch (showmenu){
     return option;
     generatelab(lab, 5);
-    showlabyrinth(lab);
+    //showlabyrinth(lab);
     return 0;
 }
