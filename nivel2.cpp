@@ -119,9 +119,16 @@ void gLabyrinthLevel2() {
 }
 
 int main() {
+    // Forzar UTF-8 y limpiar
+    SetConsoleOutputCP(65001);
+    system("chcp 65001 > nul");
+    system("cls");
+
+    cout << "\n(Si ves cuadros raros, cambia la fuente a 'Consolas' o 'Lucida Console')\n";
+    esperar(3000); // Dar tiempo para leerlo
+    SetConsoleOutputCP(CP_UTF8);
     mensajeOscuridad();
     mostrarAdvertenciaLaberinto();
     gLabyrinthLevel2();
-    SetConsoleOutputCP(CP_UTF8);
     return 0;
 }
