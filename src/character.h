@@ -3,11 +3,12 @@
 #include <ctime>
 #include "ball.h" // Incluye el header de bolas
 #include "save_game.h"
+#include "music.h"
 
 #define MOVER_H
 int x = 10, y = 5;
 int coin_x, coin_y;
-int ch, score = 0;
+int ch = 0, score = 0;
 Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
 
 void espadaso(WINDOW *win, int x, int y, int last_dir);
@@ -29,6 +30,7 @@ void inicial()
     // Posición inicial de la moneda
     coin_x = rand() % (COLS - 2) + 1;
     coin_y = rand() % (LINES - 2) + 1;
+    reproducirFondo();
 }
 
 // Definición de la función para mover al personaje
