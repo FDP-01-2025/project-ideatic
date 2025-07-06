@@ -1,6 +1,44 @@
 #include <iostream>
 #include <ctime>
+#include <string>
 using namespace std;
+
+
+// espera para que salgan las letras 
+void esperar(int milisegundos) {
+    Sleep(milisegundos);
+}
+
+// limpia la pantalla
+void limpiarPantalla() {
+    system("cls");
+}
+
+// mostrar mensaje con efecto de letra por letra
+void mensajeOscuridad() {
+    limpiarPantalla();
+
+    string linea1 = "Has logrado avanzar... pero";
+    string linea2 = "has abierto una puerta que puede que nunca logres cerrar.";
+    string linea3 = " ";
+    string linea4 = "Lo oculto despierta cuando el polvo cae.";
+    string linea5 = "Solo quien lee entre las sombras encuentra la salida.";
+
+    // mostrar cada línea con pausa y efecto
+    string mensaje[] = { linea1, linea2, linea3, linea4, linea5 };
+
+    for (int l = 0; l < 5; l++) {
+        cout << "\n\n";
+        for (char c : mensaje[l]) {
+            cout << c << flush;
+            esperar(60); // velocidad de escritura
+        }
+        esperar(1500); // pausa entre líneas
+    }
+
+    esperar(2000); // espera final antes de iniciar el laberinto
+    limpiarPantalla();
+}
 
 const int ROWS = 15;
 const int COLUMNS = 60;
