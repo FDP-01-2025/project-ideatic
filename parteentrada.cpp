@@ -15,10 +15,10 @@ void dibujarPiramide() {
     int fila_inicial = 2;//donde se empieza a dibujar la piramide osea la base 
 
     for (int nlinea = 1; nlinea <= total_lineas; nlinea++) {// dibuja linea a linea la piramide con el valor d elineas desde 1 a 25
-        int nast = (nlinea * 2) - 1;// calcula los asterisco que usamo spara que aumenten de dos en dos 
-        int nesp = (ancho_base - nast) / 2;
+        int aste = (nlinea * 2) - 1;// calcula los asterisco que usamo spara que aumenten de dos en dos 
+        int espacio = (ancho_base - aste) / 2;
 
-        string linea = string(nesp, ' ') + string(nast, '*');// calcula los espacios y los asteriscos
+        string linea = string(espacio, ' ') + string(aste, '*');// calcula los espacios y los asteriscos
         mvprintw(fila_inicial + nlinea, 10, linea.c_str());
     }
 
