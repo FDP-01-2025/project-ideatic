@@ -4,9 +4,6 @@
 #include <ctime> //para generar valores aleatorios, en este caso, los laberintos xd.
 using namespace std;
 
-#define columns 50 // numero de columnas que tendra la matriz para formar el laberinto
-#define rows 15    // numero de filas que tendra la matriz para el laberint
-
 void homescreen()
 {
     cout << "Welcome to Lost city :D" << endl;
@@ -25,30 +22,37 @@ void showmenu()
 }
 void level1()
 {
-    cout << "|           LEVEL 1           |" << endl;
-    cout << "|     Use the rows to move    |" << endl;
-    cout << "|      and space to jump      |" << endl;
-    // colocar aqui las acciones del nivel 1.
+    cout << "                LEVEL 1           " << endl;
+    cout << "Use the rows to move and to attack" << endl;
 }
-void generatelab(int matriz[rows][columns], int density)
+
+#define rows 15    // numero de filas que tendra la matriz para el laberint
+#define columns 60 // numero de columnas que tendra la matriz para formar el laberinto
+#define density 150
+
+void generatelab(int matriz[rows][columns])
 {
-    int walls = density * 8;
+    int walls = density * 6;
 
     for (int i = 0; i < rows; i++) // para cada fila, se creara el numero de columnas
     {
-        for (int a = 0; a < rows; a++)
+        for (int a = 0; a < columns; a++)
         {
             if (a == 0 || i == 0 || a == rows - 1 || i == columns - 1)
             {
-                matriz[a][i] = 1;
+                matriz[i][a] = 1;
             }
             else
             {
-                matriz[a][i] = 0;
+                matriz[i][a] = 0;
             }
         }
     }
+
     // para generar el laberinto:
+
+    srand(time(NULL)); // para poder generar el laberinto cada cierto tiempo.
+
     for (int c = 0; c < density; c++)
     {
         int cl = rand() % (columns - 4) + 2; // se coloca despues del rand esa operacion porque debe de estar dentro del laberinto, se le resta 4, para que tome valores dentro del numero de columnas.
@@ -64,10 +68,18 @@ void generatelab(int matriz[rows][columns], int density)
             int mr[4] = {rw + 2, rw - 2, rw, rw}; // longitud para las filas
             int ran = rand() % 4;                 // ran=numeros random xd
 
-            if (matriz[mr[ran]][mc[ran]] == 0)
+            if (mr[ran] >= 0 && mc[ran] < rows && mc[ran] >= 0 && mc[ran] < columns)
             {
-                matriz[mr[ran]][mc[ran]] = 1;
-                matriz[mr[ran] + (rw - mr[ran]) / 2][mc[ran] + (cl - mc[ran]) / 2] = 1;
+                if (matriz[mr[ran]][mc[ran]] == 0)
+                {
+                    matriz[mr[ran]][mc[ran]] = 1;
+                    int midrow = mr[ran] + (rw - mr[ran]) / 2;
+                    int midcolumn = mc[ran] + (cl - mc[ran]) / 2;
+                    if (midrow >= 0 && midrow < rows && midcolumn >= 0 && midcolumn < columns)
+                    {
+                        matriz[midrow][midcolumn] = 1;
+                    }
+                }
             }
         }
     }
@@ -80,11 +92,11 @@ void showlabyrinth(int matriz[rows][columns])
         {
             if (matriz[i][j] == 1)
             {
-                cout << "||" << endl;
+                cout << "##";
             }
             else
             {
-                cout << " ";
+                cout << "  ";
             }
         }
         cout << endl;
@@ -92,25 +104,15 @@ void showlabyrinth(int matriz[rows][columns])
 }
 int main()
 {
+    srand(time(NULL));
+
     int lab[rows][columns];
-    float density = 0.25;
 
-    srand(time(NULL) / 10); // para poder generar el laberinto cada 10 segundos.
-
-    homescreen();
-    showmenu();
-    int option;
-
-    cout << "Select a option to continue: ";
-    cin >> option;
-
-    //switch(showmenu){
-    //case 1:
-    //level1();
-    //break;
-    //}
-    return option;
-    generatelab(lab, 5);
+    //homescreen();
+    //showmenu();
+    generatelab(lab);
     showlabyrinth(lab);
+
     return 0;
 }
+
