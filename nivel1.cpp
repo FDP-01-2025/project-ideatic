@@ -38,7 +38,7 @@ void generatelab(int matriz[rows][columns])
     {
         for (int a = 0; a < columns; a++)
         {
-            if (a == 0 || i == 0 || a == rows - 1 || i == columns - 1)
+            if (a == 0 || i == 0 || a == columns - 1 || i == rows - 1)
             {
                 matriz[i][a] = 1;
             }
