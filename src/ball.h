@@ -2,6 +2,8 @@
 #define BALL_H
 
 #include <curses.h>
+#include "constants.h" // Incluye las constantes ROWS y COLUMNS
+
 
 #define MAX_BALLS 10
 
@@ -14,7 +16,7 @@ struct Ball
 };
 
 // Dibuja y mueve todas las bolas activas, sin laberinto
-void update_balls(WINDOW *win, Ball balls[], int max_balls, int width, int height)
+void update_balls(WINDOW *win, Ball balls[], int max_balls, int offset_x, int offset_y)
 {
     for (int i = 0; i < max_balls; i++)
     {
@@ -24,9 +26,9 @@ void update_balls(WINDOW *win, Ball balls[], int max_balls, int width, int heigh
             balls[i].x += balls[i].dx;
             balls[i].y += balls[i].dy;
 
-            // Desactiva la bola si sale de los límites de la pantalla
-            if (balls[i].x <= 0 || balls[i].x >= width - 1 ||
-                balls[i].y <= 0 || balls[i].y >= height - 1)
+            // Desactiva la bola si sale de los límites del laberinto
+            if (balls[i].x < 0 || balls[i].x >= COLUMNS ||
+                balls[i].y < 0 || balls[i].y >= ROWS)
             {
                 balls[i].active = false;
             }
@@ -34,7 +36,8 @@ void update_balls(WINDOW *win, Ball balls[], int max_balls, int width, int heigh
             {
                 // Dibuja la bola
                 wattron(win, COLOR_PAIR(4));
-                mvwaddch(win, balls[i].y, balls[i].x, 'o');
+                // ¡Aquí está el cambio importante!
+                mvwaddch(win, offset_y + balls[i].y, offset_x + balls[i].x, 'o');
                 wattroff(win, COLOR_PAIR(4));
             }
         }

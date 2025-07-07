@@ -30,7 +30,10 @@ void inicial()
     srand(time(NULL));
 
     // Posición inicial de la moneda: SOLO en un espacio libre
-    do {
+    do
+    {
+        update_balls(stdscr, balls, MAX_BALLS, COLS, LINES);
+
         coin_x = rand() % COLUMNS;
         coin_y = rand() % ROWS;
     } while (laberinto[coin_y][coin_x] != 0);
@@ -43,12 +46,17 @@ void inicial()
 void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
 {
     int nx = x, ny = y;
-    if (ch == KEY_UP && y > 1) ny--;
-    else if (ch == KEY_DOWN && y < alto - 2) ny++;
-    else if (ch == KEY_LEFT && x > 1) nx--;
-    else if (ch == KEY_RIGHT && x < ancho - 2) nx++;
+    if (ch == KEY_UP && y > 1)
+        ny--;
+    else if (ch == KEY_DOWN && y < alto - 2)
+        ny++;
+    else if (ch == KEY_LEFT && x > 1)
+        nx--;
+    else if (ch == KEY_RIGHT && x < ancho - 2)
+        nx++;
     // Solo mueve si no hay muro
-    if (laberinto[ny][nx] == 0) {
+    if (laberinto[ny][nx] == 0)
+    {
         x = nx;
         y = ny;
     }
@@ -62,18 +70,22 @@ void puntos()
     {
         clear();
         // Dibuja el marco
-        for (int i = 0; i < ROWS + 2; i++) {
+        for (int i = 0; i < ROWS + 2; i++)
+        {
             mvaddch(i, 0, '|');
             mvaddch(i, COLUMNS + 1, '|');
         }
-        for (int j = 0; j < COLUMNS + 2; j++) {
+        for (int j = 0; j < COLUMNS + 2; j++)
+        {
             mvaddch(0, j, '-');
             mvaddch(ROWS + 1, j, '-');
         }
 
         // Dibuja el laberinto
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLUMNS; j++)
+            {
                 if (laberinto[i][j] == 1)
                     mvaddch(offset_y + i, offset_x + j, '#');
             }
@@ -88,6 +100,7 @@ void puntos()
         update_balls(stdscr, balls, MAX_BALLS, offset_x, offset_y);
 
         refresh();
+        
 
         ch = getch();
         if (ch == 'q' || ch == 'Q')
@@ -103,13 +116,15 @@ void puntos()
             espadaso(stdscr, offset_x + x, offset_y + y, last_dir);
         }
 
-        if (x == coin_x && y == coin_y) {
+        if (x == coin_x && y == coin_y)
+        {
             reproducirMoneda();
             napms(500);
             reproducirFondo();
             score++;
             // Nueva moneda en un espacio libre
-            do {
+            do
+            {
                 coin_x = rand() % COLUMNS;
                 coin_y = rand() % ROWS;
             } while (laberinto[coin_y][coin_x] != 0);
