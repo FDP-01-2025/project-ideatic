@@ -25,24 +25,23 @@ void mensajeOscuridad() {
     string linea5 = "Solo quien lee entre las sombras encuentra la salida.";
 
    
-    string mensaje[] = { linea1, linea2, linea3, linea4, linea5 };//
+    string mensaje[] = { linea1, linea2, linea3, linea4, linea5 };//lo gurdamos en un arreglo asi lo que se hace es que va recoriendo linea por linea 
 
-    for (int l = 0; l < 5; l++) {
+    for (int l = 0; l < 5; l++) {// recorre cada linea del arreglo 
         cout << "\n\n";
-        for (char c : mensaje[l]) {
-            cout << c << flush;
-            esperar(40); //velocidad de escritura
+        for (char c : mensaje[l]) {// cada vuelta que de el bucle va a imprimir una letra por letra
+            cout << c; 
+            esperar(20); //velocidad de escritura 40 miliseg
         }
         esperar(800); //pausa entre líneas
     }
     esperar(150); //espera final antes de iniciar el laberinto
-    limpiarPantalla();
+    limpiarPantalla();//limpiamos la apntalla para que ya no salga lo siguiente 
 }
 
 void mostrarAdvertenciaLaberinto() {
     void esperar(int milisegundos);
 void limpiarPantalla();
-void mostrarAdvertenciaLaberinto();
 
     cout << "\n\n";
     cout << "╔══════════════════════════════════════════════════════════════════════╗\n";
@@ -55,7 +54,7 @@ void mostrarAdvertenciaLaberinto();
     cout << "║                                                                      ║\n";
     cout << "║            Cada error no te aleja... te acerca.                      ║\n";
     cout << "╚══════════════════════════════════════════════════════════════════════╝\n";
-    esperar(3000); // 3 segundos de pausa para leer
+    esperar(5000); //  segundos de pausa para leer
     limpiarPantalla(); // limpiar antes del laberinto
 }
 
@@ -119,9 +118,6 @@ void gLabyrinthLevel2() {
 }
 
 int main() {
-    // forzar UTF-8 y limpiar
-    SetConsoleOutputCP(65001);// compatibilidad y cambio cambio de codificacion y version.
-    system("chcp 65001 > nul");// permite que se muestren correctamente caracteres especiales
     system("cls");// limpia la consola antes de mostrar contenido nuevo 
     SetConsoleOutputCP(CP_UTF8);// cambia la codificación de salida de la la consola UTF-8 para que se vean bien los símbolos especiales del laberinto
     mensajeOscuridad();
