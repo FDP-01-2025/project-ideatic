@@ -5,6 +5,7 @@
 #include "src/save_game.h"
 #include "src/labyrinth.h"
 #include "src/message.h"
+#include "src/enemy.h"
 
 int main()
 {

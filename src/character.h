@@ -6,6 +6,7 @@
 #include "music.h"
 #include "labyrinth.h" // Incluye las funciones del laberinto
 #include "constants.h" // Incluye las constantes ROWS y COLUMNS
+#include "enemy.h"
 
 #define MOVER_H
 int x = 10, y = 5;
@@ -13,6 +14,7 @@ int coin_x, coin_y;
 int ch = 0, score = 0;
 Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
 int laberinto[ROWS][COLUMNS];
+Enemy enemigos[NUM_ENEMIGOS];
 
 void espadaso(WINDOW *win, int x, int y, int last_dir);
 
@@ -25,20 +27,34 @@ void inicial()
     start_color();
     init_pair(2, COLOR_YELLOW, COLOR_BLACK); // Color del personaje
     init_pair(3, COLOR_CYAN, COLOR_BLACK);   // Color de la espada
+    init_pair(5, COLOR_RED, COLOR_BLACK);    // O el color que prefieras
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
     srand(time(NULL));
 
-    // Posición inicial de la moneda: SOLO en un espacio libre
-    do
+    // Generar enemigos en posiciones libres del laberinto
+    generar_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
+    for (int i = 0; i < NUM_ENEMIGOS; i++)
     {
-        update_balls(stdscr, balls, MAX_BALLS, COLS, LINES);
+        enemigos[i].dir = (rand() % 2 == 0) ? 1 : -1; // Dirección inicial aleatoria
+        enemigos[i].active = true;
+    }
 
+    // Posición inicial de la moneda: SOLO en un espacio libre
+    do {
         coin_x = rand() % COLUMNS;
         coin_y = rand() % ROWS;
     } while (laberinto[coin_y][coin_x] != 0);
     // reproducirFondo();
-    generarLaberinto(laberinto);
+    generarLaberinto(laberinto); // PRIMERO genera el laberinto
+
+    // Luego busca una posición libre para la moneda
+    do {
+        coin_x = rand() % COLUMNS;
+        coin_y = rand() % ROWS;
+    } while (laberinto[coin_y][coin_x] != 0);
+
+    // ...resto del código...
 }
 
 // Definición de la función para mover al personaje
@@ -66,6 +82,8 @@ void puntos()
 {
     int last_dir = KEY_RIGHT;
     int offset_y = 1, offset_x = 1;
+    int enemy_tick = 0; // Contador para el movimiento de enemigos
+    const int ENEMY_SPEED = 3; // Mueven cada 3 ciclos (ajusta a tu gusto)
     while (1)
     {
         clear();
@@ -98,9 +116,50 @@ void puntos()
         wattroff(stdscr, COLOR_PAIR(2));
 
         update_balls(stdscr, balls, MAX_BALLS, offset_x, offset_y);
+        // Mueve los enemigos antes de dibujarlos
+        if (enemy_tick % ENEMY_SPEED == 0) {
+            mover_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
+        }
+        dibujar_enemigos(stdscr, enemigos, NUM_ENEMIGOS, offset_x, offset_y);
+
+        // Verifica colisión con enemigos
+        for (int i = 0; i < NUM_ENEMIGOS; i++) {
+            if (enemigos[i].active && enemigos[i].x == x && enemigos[i].y == y) {
+                // Mensaje de derrota y reinicio
+                clear();
+                mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Has perdido! Presiona una tecla para reiniciar...");
+                refresh();
+                nodelay(stdscr, FALSE);
+                getch();
+                nodelay(stdscr, TRUE);
+                // Reinicia variables principales
+                score = 0;
+                x = 10; y = 5;
+                generarLaberinto(laberinto);
+                generar_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
+                for (int j = 0; j < NUM_ENEMIGOS; j++) {
+                    enemigos[j].dir = (rand() % 2 == 0) ? 1 : -1;
+                    enemigos[j].active = true;
+                }
+                do {
+                    coin_x = rand() % COLUMNS;
+                    coin_y = rand() % ROWS;
+                } while (laberinto[coin_y][coin_x] != 0);
+                continue; // Reinicia el ciclo principal
+            }
+        }
+
+        // Verifica si el jugador ha ganado
+        if (score >= 5) {
+            clear();
+            mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Felicidades! ¡Ganaste el nivel!");
+            refresh();
+            nodelay(stdscr, FALSE);
+            getch();
+            break; // Sale del bucle y termina el juego
+        }
 
         refresh();
-        
 
         ch = getch();
         if (ch == 'q' || ch == 'Q')
@@ -130,6 +189,7 @@ void puntos()
             } while (laberinto[coin_y][coin_x] != 0);
         }
         mover_personaje(x, y, ch, COLUMNS, ROWS);
+        enemy_tick++; // Incrementa el contador de ciclos
     }
 
     // Menú de confirmación para guardar partida al salir
