@@ -1,64 +1,25 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/mi1WNrHU)
 # Proyecto de C++ The Lost City
 
-## Descripción del Proyecto
+## Descripción y ambientacion del Proyecto
 
-Un aventurero explora una pirámide en busca de una ciudad perdida y su tesoro legendario. El jugador debe superar cuatro niveles llenos de trampas, acertijos y enemigos elementales, usando solo tres vidas. A medida que avanza, desbloquea mejoras y habilidades que lo ayudan a sobrevivir. El objetivo es llegar al corazón de la pirámide, donde un antiguo misterio lo espera.
+Un aventurero explora una pirámide en busca de una ciudad perdida y su tesoro legendario, el jugador debe superar cuatro niveles llenos de trampas, acertijos y enemigos elementales, usando solo tres vidas. A medida que avanza, desbloquea mejoras y habilidades que lo ayudan a sobrevivir. El objetivo es llegar al corazón de la pirámide, donde un antiguo misterio lo espera.
 
-## Distribución de estructuras de control en el juego:
+Nivel 1 – Guardián del Agua: El jugador se enfrenta a un entorno húmedo y traicionero, donde deberá esquivar trampas, recolectar monedas y derrotar a un enemigo hecho de agua para avanzar.
 
-## For: 
-Controla el avance por los 4 niveles, cargando entorno, enemigos y eventos. También gestiona las acciones de los enemigos (ataque, movimiento, patrullaje).
-## Switch: 
-Maneja decisiones en acertijos, combates y diálogos.
-## Do-While: 
-Ejecuta menús o acciones obligatorias al menos una vez (como selección de armas o aceptar ayuda).
-## While: 
-Repite intentos en acertijos hasta una respuesta correcta o agotar oportunidades.
-## If-Else:
-Evalúa decisiones del jugador, uso de comodines y comportamiento de enemigos.
-##Arreglos: 
-Almacenan estadísticas del jugador, habilidades, armas y enemigos por nivel para su actualización y control.
+Nivel 2 – Derrumbe: La pirámide comienza a colapsar. El jugador debe escapar entre escombros mientras enfrenta al Hombre de Arena para poder pasar de nivel.
 
-## Equipo
+Nivel 3 – Lava: El jugador debe recolectar más monedas y sobrevivir a un terreno volcánico para seguir y pelear con el villano para poder pasar de nivel.
 
-- **Nombre del equipo:** Ideatic
-
-### Integrantes del equipo
-
-1. **Nombre completo:** Amy Ariadna Barraza Villacorta  
-   **Carnet:** 00012725
-
-2. **Nombre completo:** Jaqueline Nicole Cardoza Maldonado  
-   **Carnet:** 000252125
-
-3. **Nombre completo:** Diana Rebeca Ayala Jandres  
-   **Carnet:** 00021325
-
-4. **Nombre completo:** Gabriel Alejandro Guevara Rodríguez  
-   **Carnet:** 00252225
-
-## Instrucciones de Ejecución
-
-1. Clona este repositorio en tu máquina local:
-   ```bash
-   git clone [URL del repositorio]
-
-
-
-
-
-
-
-# Nivel 2: El Derrumbe
-
-El aventurero sigue dentro de una pirámide, debe resolver acertijos y escapar mientras la pirámide se derrumba y enfrentar al Hombre de arena, evitando obstáculos y su perdida.
+Nivel 4 – Escarabajo de Oro: En el gran final, el jugador atraviesa un recorrido que reúne todos los peligros anteriores.Solo si el jugador usa correctamente los objetos recolectados y actúa con inteligencia, podrá alcanzar el tesoro oculto al final de la pirámide.
 
 ## Mecánica principal
-- Movimiento con flechas.
-- Esquivar rocas y enredaderas, y liberarse de ellas.
-- Resolver acertijos que afectan el desarrollo del nivel.
-- Combatir enemigos, especialmente al principal Hombre de Arena.
+- Movimiento con flechas: El jugador se mueve usando las flechas del teclado (↑ ↓ ← →) esquivando trampas y buscando salidas.
+- Combatir enemigos, especialmente al principal el escarabajo de oro.
+- El jugador debera salir de los laberintos para poder salir a la de la piramide y ganar
+-Movimiento libre: Se controla al personaje con las flechas del teclado (↑ ↓ ← →) para avanzar entre los niveles, evitando muros, trampas o enemigos.
+-A lo largo del laberinto hay monedas y mejoras. Son necesarias para avanzar, mejorar habilidades o desbloquear caminos especiales.
+
 
 ## Aplicación de temas 
 
@@ -76,15 +37,46 @@ El aventurero sigue dentro de una pirámide, debe resolver acertijos y escapar m
 
 - **Manejo de Errores:** Se valida la entrada del usuario en menús y acertijos, asegurando que solo se acepten opciones válidas y evitando comportamientos inesperados o caídas del programa.
 
-
 ## Consideraciones técnicas
 - El mapa se representa con matrices de caracteres, usando símbolos para tierra, rocas, enredaderas y enemigos.
 - El acertijo se presenta como una pregunta con opciones múltiples, la cual el resultado afecta la intensidad del derrumbe.
 - El Hombre de Arena lanza objetos arrojados que dañan al jugador y se mueve con patrones definidos.
 - El derrumbe modifica el mapa en tiempo real, simulando caída de escombros y grietas.
 
-## Instrucciones para compilar y ejecutar
+## Consideraciones tecnicas de desarollo 
+--Uso de PDCurses: El juego utiliza la biblioteca PDCurses para crear una interfaz gráfica en consola con ventanas, movimientos fluidos del personaje, y simulaciones visuales como ataques, laberintos y muros.  
 
-Para compilar el proyecto, ejecutar:
+## Imagen 
 
-g++ main.cpp src/*.cpp(cuando  se cree la carpeta, sino nivel2.cpp) -o EscapeDelDerrumbe
+## Equipo
+
+Integrantes del equipo
+Nombre completo: Amy Ariadna Barraza Villacorta
+Carnet: 00012725
+
+Nombre completo: Jaqueline Nicole Cardoza Maldonado
+Carnet: 000252125
+
+Nombre completo: Diana Rebeca Ayala Jandres
+Carnet: 00021325
+
+Nombre completo: Gabriel Alejandro Guevara Rodríguez
+Carnet: 00252225
+
+## Instrucciones de Ejecución
+Clona este repositorio en tu máquina local:
+git clone [URL del repositorio]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
