@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstdlib>
+#include <windows.h>
 #include <ctime> //para generar valores aleatorios, en este caso, los laberintos xd.
 using namespace std;
 
@@ -92,11 +93,11 @@ void showlabyrinth(int matriz[rows][columns])
         {
             if (matriz[i][j] == 1)
             {
-                cout << "##";
+                cout << "██";
             }
             else
             {
-                cout << "  ";
+                cout << "░░";
             }
         }
         cout << endl;
@@ -109,8 +110,10 @@ int main()
 
     int lab[rows][columns];
 
-    //homescreen();
-    //showmenu();
+    // homescreen();
+    // showmenu();
+    system("chcp 65001");
+    SetConsoleOutputCP(CP_UTF8); // para poder tener el mismo formato de simbolos en las computadoras.
     generatelab(lab);
     showlabyrinth(lab);
 
