@@ -45,7 +45,7 @@ void limpiarPantalla();
 
     cout << "\n\n";
     cout << "╔══════════════════════════════════════════════════════════════════════╗\n";
-    cout << "║                         ⚠ ADVERTENCIA ⚠                              ║\n";
+    cout << "║                         ⚠ ADVERTENCIA ⚠                             ║\n";
     cout << "║                                                                      ║\n";
     cout << "║             Este lugar no fue hecho para los vivos.                  ║\n";
     cout << "║               El polvo que pisas... lo alimenta.                     ║\n";
