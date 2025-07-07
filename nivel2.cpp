@@ -118,7 +118,6 @@ void gLabyrinthLevel2() {
 }
 
 int main() {
-    system("cls");// limpia la consola antes de mostrar contenido nuevo 
     SetConsoleOutputCP(CP_UTF8);// cambia la codificación de salida de la la consola UTF-8 para que se vean bien los símbolos especiales del laberinto
     mensajeOscuridad();
     mostrarAdvertenciaLaberinto();

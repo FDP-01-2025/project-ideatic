@@ -18,17 +18,16 @@ void limpiarPantalla() {
 void mensajeOscuridad() {
     limpiarPantalla();
 
-    string linea1 = "Llegaste hasta aquí... pero no todos llegan.";
-    string linea2 = "Este es el último juego, y aún no sabes si podrás ganarlo.";
-    string linea3 = "No hay ganadores... solo quienes sobreviven.";
-    string linea4 = "El que entra no siempre sale. Y el que sale... no siempre vuelve.";
+    string lin1 = "¡FELICIDADES LLEGASTE AL JUEGO FINAL!";
+    string lin2 = "Pero eso no te garantiza el triunfo....";
+    string lin3 = "Solo quien comprende el proposito de cada herramienta logra llegar a su destino ";
+    string lin3 = "Buena suertee :)";
+    string mensaje[] = { lin1, lin2, lin3, };
 
-    string mensaje[] = { linea1, linea2, linea3, linea4 };
-
-    for (int l = 0; l < 4; l++) {
+    for (int l = 0; l < 3; l++) {
         cout << "\n \n";
-        for (char c : mensaje[l]) {
-            cout << c << flush;
+        for (char p : mensaje[l]) {
+            cout << p;
             esperar(40); // velocidad de escritura
         }
         esperar(800); // pausa entre líneas
@@ -41,14 +40,14 @@ void mensajeOscuridad() {
 void mostrarAdvertenciaLaberinto() {
     cout << "\n\n";
     cout << "╔══════════════════════════════════════════════════════════════════════╗\n";
-    cout << "║                         ⚠ ADVERTENCIA FINAL ⚠                        ║\n";
+    cout << "║                 ⚠ ⚠ ⚠  ULTIMA   ADVERTENCIA ⚠ ⚠ ⚠                  ║\n";
     cout << "║                                                                      ║\n";
-    cout << "║     La soledad camina contigo. El final acaba contigo mismo.         ║\n";
-    cout << "║       No sabes si estás ganando... o simplemente huyendo.            ║\n";
+    cout << "║             Puedes ganar… o perderlo todo en segundos.               ║\n";
+    cout << "║           Si fallas... serás uno más que nunca volvió.               ║\n";
     cout << "║                                                                      ║\n";
-    cout << "║              No hay regreso, solo queda avanzar.                     ║\n";
+    cout << "║               ¿Estás listo para intentarlo?                          ║\n";
     cout << "╚══════════════════════════════════════════════════════════════════════╝\n";
-    esperar(3000);
+    esperar(5000);
     limpiarPantalla();
 }
 
@@ -109,11 +108,7 @@ void gLabyrinthLevel4() {
 }
 
 int main() {
-    SetConsoleOutputCP(65001);
-    system("chcp 65001 > nul");
-    system("cls");
     SetConsoleOutputCP(CP_UTF8);
-
     mensajeOscuridad();
     mostrarAdvertenciaLaberinto();
     gLabyrinthLevel4();
