@@ -1,9 +1,20 @@
 #include <iostream>
-#include <stdio.h>
-#include <cstdlib>
 #include <windows.h>
+#include <string>
 #include <ctime> //para generar valores aleatorios, en este caso, los laberintos xd.
 using namespace std;
+
+// funciones para mostrar en la terminal antes del laberinto
+
+// para limpiar la terminal antes de generar el laberinto
+void cleanscreen(){
+    system("cls");
+}
+
+//para esperar cierto tiempo entre cada texto que se mostrara
+void waitscreen(int milliseconds) {
+    Sleep(milliseconds);
+}
 
 void homescreen()
 {
@@ -21,17 +32,49 @@ void showmenu()
     cout << "|        4. Save game         |" << endl;
     cout << "|-----------------------------|" << endl;
 }
-void level1()
+//mensaje de introduccion al nivel 1
+void level1message()
 {
-    cout << "                LEVEL 1           " << endl;
-    cout << "Use the rows to move and to attack" << endl;
+    cleanscreen();
+    string message1 = "Welcome :D!";
+    string message2 = "You have entered the pyramid, use the arrow keys to move forward and grab the coins.";
+    string message3 = "If you collect the coins and manage to escape the labyrint by defeating the villain, you will move on to the next level.";
+    string message4 = "Good luck!, see you at the next level ";
+    string message5 = "...";
+    string message6 = "or not :)";
+
+    string message[] = {message1, message2, message3, message4, message5, message6};
+    for (int i = 0; i < 6; i++)
+    {
+        cout << endl;
+        for (char a : message[i])
+        {
+            cout << a;
+            waitscreen(20);
+        }
+        waitscreen(800);
+    }
+    cleanscreen();
+    waitscreen(150);
 }
 
-#define rows 15    // numero de filas que tendra la matriz para el laberint
-#define columns 60 // numero de columnas que tendra la matriz para formar el laberinto
-#define density 150
+// mensaje de finalizacion del nivel
 
-void generatelab(int matriz[rows][columns])
+
+
+
+
+
+
+
+
+
+
+#define rows 15     // numero de filas que tendra la matriz para el laberint (altura del laberinto)
+#define columns 60  // numero de columnas que tendra la matriz para formar el laberinto (paredes externas, longitud del laberinto)
+#define density 150 // densidad que debe de tener el laberinto para formar las paredes internas del laberinto
+
+void generatelab(int matriz[rows][columns]) //
 {
     int walls = density * 6;
 
@@ -60,7 +103,6 @@ void generatelab(int matriz[rows][columns])
         cl = (cl / 2) * 2;
         int rw = rand() % (rows - 4) + 2; // lo mismo para las filas.
         rw = (rw / 2) * 2;
-
         matriz[rw][cl] = 1;
 
         for (int d = 0; d < walls; d++)
@@ -69,7 +111,7 @@ void generatelab(int matriz[rows][columns])
             int mr[4] = {rw + 2, rw - 2, rw, rw}; // longitud para las filas
             int ran = rand() % 4;                 // ran=numeros random xd
 
-            if (mr[ran] >= 0 && mc[ran] < rows && mc[ran] >= 0 && mc[ran] < columns)
+            if (mr[ran] >= 0 && mr[ran] < rows && mc[ran] >= 0 && mc[ran] < columns)
             {
                 if (matriz[mr[ran]][mc[ran]] == 0)
                 {
@@ -84,9 +126,6 @@ void generatelab(int matriz[rows][columns])
             }
         }
     }
-}
-void showlabyrinth(int matriz[rows][columns])
-{
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < columns; j++)
@@ -110,12 +149,12 @@ int main()
 
     int lab[rows][columns];
 
-    // homescreen();
-    // showmenu();
-    system("chcp 65001");
+    homescreen();
+    showmenu();
+    system("cls");
     SetConsoleOutputCP(CP_UTF8); // para poder tener el mismo formato de simbolos en las computadoras.
+    level1message();
     generatelab(lab);
-    showlabyrinth(lab);
 
     return 0;
 }
