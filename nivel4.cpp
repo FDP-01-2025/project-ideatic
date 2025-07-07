@@ -47,7 +47,7 @@ void mostrarAdvertenciaLaberinto() {
     cout << "║                                                                      ║\n";
     cout << "║               ¿Estás listo para intentarlo?                          ║\n";
     cout << "╚══════════════════════════════════════════════════════════════════════╝\n";
-    esperar(4000);
+    esperar(5000);
     limpiarPantalla();
 }
 
