@@ -3,19 +3,20 @@
 #include <time.h>
 #include "src/character.h"
 #include "src/save_game.h"
+#include "src/labyrinth.h"
 
 int main()
 {
+
     inicial(); // Inicializa curses y la pantalla
 
     nodelay(stdscr, FALSE);
-    int option = menu();
+    int option = menu(); // Llama al menú y obtiene la opción seleccionada
     nodelay(stdscr, TRUE);
 
-    if (option == '1') {
-        puntos(); // Nueva partida
-    } else if (option == '2') {
-        // Llama directamente a load_game
+    if (option == 1) { // Nueva partida
+        puntos(); // Inicia una nueva partida
+    } else if (option == 2) { // Cargar partida
         if (load_game("save.txt", x, y, score, balls, MAX_BALLS)) {
             printw("Game loaded successfully!\n");
             refresh();
@@ -26,9 +27,9 @@ int main()
             refresh();
             napms(1500);
         }
-    } else {
+    } else { // Salir
         endwin();
-        return 0; // Salir
+        return 0;
     }
     endwin();
     return 0;

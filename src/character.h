@@ -1,9 +1,11 @@
 #include <iostream>
 #include <curses.h>
 #include <ctime>
-#include "ball.h" // Incluye el header de bolas
+#include "ball.h"
 #include "save_game.h"
 #include "music.h"
+#include "labyrinth.h" // Incluye las funciones del laberinto
+#include "constants.h" // Incluye las constantes ROWS y COLUMNS
 
 #define MOVER_H
 int x = 10, y = 5;
@@ -15,14 +17,13 @@ void espadaso(WINDOW *win, int x, int y, int last_dir);
 
 void inicial()
 {
-
     // Inicializa la pantalla y colores
     initscr();
     noecho();
     curs_set(0);
     start_color();
     init_pair(2, COLOR_YELLOW, COLOR_BLACK); // Color del personaje
-    init_pair(3, COLOR_CYAN, COLOR_BLACK);   // color de la espada
+    init_pair(3, COLOR_CYAN, COLOR_BLACK);   // Color de la espada
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
     srand(time(NULL));
@@ -55,15 +56,19 @@ void puntos()
 {
     int last_dir = KEY_RIGHT; // Inicializa la dirección
     // Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
+    int laberinto[ROWS][COLUMNS]; // Matriz del laberinto
+    
+    generarLaberinto(laberinto); // Generar el laberinto
 
     while (1)
     {
         clear();
+        dibujarLaberinto(laberinto); // Dibujar el laberinto
         box(stdscr, 0, 0);
-        mvprintw(0, 2, "Recoge monedas ($) con '@'. Puntos: %d | 'q' para salir", score);
+        mvprintw(0, 2, "Collect coins ($) with '@'. Score: %d | 'q' to quit", score);
         mvaddch(coin_y, coin_x, '$');
         wattron(stdscr, COLOR_PAIR(2));  // Activa el color (por ejemplo, amarillo)
-        mvaddch(y, x, '@');              // Dibuja el personaje con color
+        mvaddch(y, x, '@');              // Dibuja el personaje with color
         wattroff(stdscr, COLOR_PAIR(2)); // Desactiva el color
 
         update_balls(stdscr, balls, MAX_BALLS, COLS, LINES);
@@ -81,7 +86,7 @@ void puntos()
         if (ch == KEY_UP || ch == KEY_DOWN || ch == KEY_LEFT || ch == KEY_RIGHT)
             last_dir = ch;
 
-        // Ataca con la espada si se presiona 'x' o 'X'
+          // Ataca con la espada si se presiona 'x' o 'X
         if (ch == 'x' || ch == 'X')
         {
             espadaso(stdscr, x, y, last_dir);
