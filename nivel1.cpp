@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <conio.h> //se ocupa esta libreria para que se puedan leer las teclas del teclado para que el personaje se mueva
 #include <string>
 #include <ctime> //para generar valores aleatorios, en este caso, los laberintos xd.
 using namespace std;
@@ -7,34 +8,43 @@ using namespace std;
 // funciones para mostrar en la terminal antes del laberinto
 
 // para limpiar la terminal antes de generar el laberinto
-void cleanscreen(){
+void cleanscreen()
+{
     system("cls");
 }
 
-//para esperar cierto tiempo entre cada texto que se mostrara
-void waitscreen(int milliseconds) {
+// para esperar cierto tiempo entre cada texto que se mostrara
+void waitscreen(int milliseconds)
+{
     Sleep(milliseconds);
 }
-
+// para mostrar la pantalla principal
 void homescreen()
 {
     cout << "Welcome to Lost city :D" << endl;
     cout << "press enter to continue" << endl;
+    waitscreen(900);
+    cleanscreen();
 }
+// para mostrar el menu
 void showmenu()
 {
+    waitscreen(1500);
+
     cout << "|-----------------------------|" << endl;
     cout << "|            MENU             |" << endl;
-    cout << "| Select a option to continue |" << endl;
-    cout << "|          1. Play            |" << endl;
-    cout << "|       2. Show levels        |" << endl;
-    cout << "|          3. Exit            |" << endl;
-    cout << "|        4. Save game         |" << endl;
+    cout << "|          1) Play            |" << endl;
+    cout << "|       2) Show levels        |" << endl;
+    cout << "|          3) Exit            |" << endl;
+    cout << "|        4) Save game         |" << endl;
     cout << "|-----------------------------|" << endl;
+    waitscreen(800);
+    cleanscreen();
 }
-//mensaje de introduccion al nivel 1
+// mensaje de introduccion al nivel 1
 void level1message()
 {
+    waitscreen(1000);
     cleanscreen();
     string message1 = "Welcome :D!";
     string message2 = "You have entered the pyramid, use the arrow keys to move forward and grab the coins.";
@@ -50,32 +60,83 @@ void level1message()
         for (char a : message[i])
         {
             cout << a;
-            waitscreen(20);
+            waitscreen(50);
         }
         waitscreen(800);
     }
     cleanscreen();
-    waitscreen(150);
+    waitscreen(175);
+}
+void loading()
+{
+    waitscreen(1000);
+    cleanscreen();
+    string message = "loading";
+    string message1 = "...";
+    string message2[] = {message, message1};
+
+    for (int j = 0; j < 2; j++)
+    {
+        for (char c : message2[j])
+        {
+            cout << c;
+            waitscreen(50);
+        }
+    }
+    waitscreen(300);
+    cleanscreen();
 }
 
 // mensaje de finalizacion del nivel
-
-
-
-
-
-
-
-
-
-
-
+void finalmessagelevel1()
+{
+    waitscreen(1000);
+    cleanscreen();
+    string message = "You've completed the level";
+    string message1 = "but don't declare victory yet!";
+    string message2 = "Press Z to move on to the next level";
+    string message3[] = {message, message1, message2};
+    for (int i = 0; i < 3; i++)
+    {
+        cout << endl;
+        for (char b : message3[i])
+        {
+            cout << b;
+            waitscreen(50);
+        }
+        waitscreen(300);
+    }
+    waitscreen(300);
+    cleanscreen();
+}
+void finalmessage2()
+{
+    waitscreen(1000);
+    cleanscreen();
+    string message = "You lost :(";
+    string message1 = "Try again to move on to the next level";
+    string message2 = "Don't get discouraged :D!";
+    string message3[] = {message, message1, message2};
+    for (int i = 0; i < 3; i++)
+    {
+        cout << endl;
+        for (char b : message3[i])
+        {
+            cout << b;
+            waitscreen(50);
+        }
+        waitscreen(300);
+    }
+    waitscreen(300);
+    cleanscreen();
+}
 #define rows 15     // numero de filas que tendra la matriz para el laberint (altura del laberinto)
 #define columns 60  // numero de columnas que tendra la matriz para formar el laberinto (paredes externas, longitud del laberinto)
 #define density 150 // densidad que debe de tener el laberinto para formar las paredes internas del laberinto
 
 void generatelab(int matriz[rows][columns]) //
 {
+    waitscreen(800);
     int walls = density * 6;
 
     for (int i = 0; i < rows; i++) // para cada fila, se creara el numero de columnas
@@ -142,19 +203,105 @@ void generatelab(int matriz[rows][columns]) //
         cout << endl;
     }
 }
+bool win(int matriz[rows][columns])
+{
+    int player1 = 1, player2 = 1; //
+    bool win = false;
+    bool play = true;
+    // bool win = false;
+    while (play)
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if (i == player1 && j == player2)
+                {
+                    cout << "@";
+                }
+                else if (matriz[i][j] == 1)
+                {
+                    cout << "██";
+                }
+                else
+                {
+                    cout << "░░";
+                }
+                cout << endl;
+            }
+            int key = _getch();
+            if (key == 224)
+            {
+                key = _getch();
+                int newPlayer = player1, newPlayer2 = player2;
+                if (key == 72)
+                    newPlayer2--;
+                else if (key == 80)
+                    newPlayer2++;
+                else if (key == 75)
+                    newPlayer--;
+                else if (key == 77)
+                    newPlayer++;
+                if (matriz[newPlayer2][newPlayer] == 0)
+                {
+                    player1 = newPlayer;
+                    player2 = newPlayer2;
+                }
+            }
+            else if (key == 'q' || key == 'Q')
+            {
+                break;
+            }
+            if (player2 == rows - 2 && player1 == columns)
+            {
+                win = true;
+                break;
+            }
+        }
+    }
+    return win;
+}
 
 int main()
 {
     srand(time(NULL));
-
     int lab[rows][columns];
-
-    homescreen();
-    showmenu();
     system("cls");
     SetConsoleOutputCP(CP_UTF8); // para poder tener el mismo formato de simbolos en las computadoras.
-    level1message();
-    generatelab(lab);
+    // pantalla prncipal y menu
+    homescreen();
+    waitscreen(2100);
+    showmenu();
+    waitscreen(1000);
+    int option;
+   
+    cout << "Select a option to continue: ";
+    cin >> option;
+    switch (option)
+
+    {
+    case 1:
+        loading();
+        waitscreen(1000);
+        level1message();
+        loading();
+        generatelab(lab);
+        // waitscreen();
+        bool levelgained = win;
+        if (win)
+        {
+            finalmessagelevel1();
+        }
+        else
+        {
+            finalmessage2();
+        }
+        break;
+        // case 2:
+    }
+
+    // generatelab(lab);
+    // finalmessagelevel1();
 
     return 0;
 }
