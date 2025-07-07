@@ -102,7 +102,6 @@ void showlabyrinth(int matriz[rows][columns])
         cout << endl;
     }
 }
-
 int main()
 {
     srand(time(NULL));
@@ -116,3 +115,4 @@ int main()
 
     return 0;
 }
+
