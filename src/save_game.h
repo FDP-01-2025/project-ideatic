@@ -8,22 +8,22 @@ using namespace std;
 
 // Guarda la partida en un archivo de texto.
 // Recibe el nombre del archivo, la posición del personaje, el puntaje y el arreglo de bolas.
+// Guarda los datos en formato similar a guardarPuntajes
 void save_game(const char *filename, int x, int y, int score, Ball balls[], int max_balls)
 {
-    ofstream file(filename); // Abre el archivo para escritura
-    if (!file)
-        return; // Si no se pudo abrir, sale de la función
-
-    // Guarda la posición del personaje y el puntaje
-    file << x << " " << y << " " << score << "\n";
-    // Guarda los datos de cada bola activa o inactiva
-    for (int i = 0; i < max_balls; i++)
-    {
-        file << balls[i].x << " " << balls[i].y << " "
-             << balls[i].dx << " " << balls[i].dy << " "
-             << balls[i].active << " " << balls[i].frame << "\n";
+    ofstream archivo(filename);
+    if (archivo.is_open()) {
+        // Guarda la posición y el puntaje del jugador principal
+        archivo << x << " " << y << " " << score << endl;
+        // Guarda los datos de cada bola activa o inactiva
+        for (int i = 0; i < max_balls; ++i) {
+            archivo << balls[i].x << " " << balls[i].y << " " << balls[i].active << endl;
+        }
+        archivo.close();
+        printw("Game saved successfully.\n");
+    } else {
+        printw("Could not save the game.\n");
     }
-    file.close(); // Cierra el archivo
 }
 
 // Carga la partida desde un archivo de texto.
