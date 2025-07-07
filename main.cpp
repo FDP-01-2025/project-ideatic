@@ -17,7 +17,7 @@ int main()
 
     if (option == 1)
     {                          // Nueva partida
-        level1message(stdscr); // Muestra el mensaje de introducción al nivel 1
+        // level1message(stdscr); // Muestra el mensaje de introducción al nivel 1
         puntos();              // Inicia una nueva partida
     }
     else if (option == 2)

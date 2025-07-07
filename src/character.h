@@ -12,6 +12,7 @@ int x = 10, y = 5;
 int coin_x, coin_y;
 int ch = 0, score = 0;
 Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
+int laberinto[ROWS][COLUMNS];
 
 void espadaso(WINDOW *win, int x, int y, int last_dir);
 
@@ -28,50 +29,63 @@ void inicial()
     nodelay(stdscr, TRUE);
     srand(time(NULL));
 
-    // Posición inicial de la moneda
-    coin_x = rand() % (COLS - 2) + 1;
-    coin_y = rand() % (LINES - 2) + 1;
+    // Posición inicial de la moneda: SOLO en un espacio libre
+    do {
+        coin_x = rand() % COLUMNS;
+        coin_y = rand() % ROWS;
+    } while (laberinto[coin_y][coin_x] != 0);
     // reproducirFondo();
+    generarLaberinto(laberinto);
 }
 
 // Definición de la función para mover al personaje
 // Recibe referencias a x e y, la tecla presionada y los límites del área de juego
 void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
 {
-    // Mueve hacia arriba si no sale del borde superior
-    if (ch == KEY_UP && y > 1)
-        y--;
-    // Mueve hacia abajo si no sale del borde inferior
-    else if (ch == KEY_DOWN && y < alto - 2)
-        y++;
-    // Mueve hacia la izquierda si no sale del borde izquierdo
-    else if (ch == KEY_LEFT && x > 1)
-        x--;
-    // Mueve hacia la derecha si no sale del borde derecho
-    else if (ch == KEY_RIGHT && x < ancho - 2)
-        x++;
+    int nx = x, ny = y;
+    if (ch == KEY_UP && y > 1) ny--;
+    else if (ch == KEY_DOWN && y < alto - 2) ny++;
+    else if (ch == KEY_LEFT && x > 1) nx--;
+    else if (ch == KEY_RIGHT && x < ancho - 2) nx++;
+    // Solo mueve si no hay muro
+    if (laberinto[ny][nx] == 0) {
+        x = nx;
+        y = ny;
+    }
 }
 
 void puntos()
 {
-    int last_dir = KEY_RIGHT; // Inicializa la dirección
-    // Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
-    int laberinto[ROWS][COLUMNS]; // Matriz del laberinto
-    
-    generarLaberinto(laberinto); // Generar el laberinto
-
+    int last_dir = KEY_RIGHT;
+    int offset_y = 1, offset_x = 1;
     while (1)
     {
         clear();
-        dibujarLaberinto(laberinto); // Dibujar el laberinto
-        box(stdscr, 0, 0);
-        mvprintw(0, 2, "Collect coins ($) with '@'. Score: %d | 'q' to quit", score);
-        mvaddch(coin_y, coin_x, '$');
-        wattron(stdscr, COLOR_PAIR(2));  // Activa el color (por ejemplo, amarillo)
-        mvaddch(y, x, '@');              // Dibuja el personaje with color
-        wattroff(stdscr, COLOR_PAIR(2)); // Desactiva el color
+        // Dibuja el marco
+        for (int i = 0; i < ROWS + 2; i++) {
+            mvaddch(i, 0, '|');
+            mvaddch(i, COLUMNS + 1, '|');
+        }
+        for (int j = 0; j < COLUMNS + 2; j++) {
+            mvaddch(0, j, '-');
+            mvaddch(ROWS + 1, j, '-');
+        }
 
-        update_balls(stdscr, balls, MAX_BALLS, COLS, LINES);
+        // Dibuja el laberinto
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                if (laberinto[i][j] == 1)
+                    mvaddch(offset_y + i, offset_x + j, '#');
+            }
+        }
+
+        mvprintw(0, COLUMNS + 4, "Collect coins ($) with '@'. Score: %d | 'q' to quit", score);
+        mvaddch(offset_y + coin_y, offset_x + coin_x, '$');
+        wattron(stdscr, COLOR_PAIR(2));
+        mvaddch(offset_y + y, offset_x + x, '@');
+        wattroff(stdscr, COLOR_PAIR(2));
+
+        update_balls(stdscr, balls, MAX_BALLS, offset_x, offset_y);
 
         refresh();
 
@@ -82,28 +96,25 @@ void puntos()
         {
             shoot_ball(balls, MAX_BALLS, x, y, last_dir);
         }
-        // Guarda la última dirección si se mueve
         if (ch == KEY_UP || ch == KEY_DOWN || ch == KEY_LEFT || ch == KEY_RIGHT)
             last_dir = ch;
-
-          // Ataca con la espada si se presiona 'x' o 'X
         if (ch == 'x' || ch == 'X')
         {
-            espadaso(stdscr, x, y, last_dir);
-            // refresh();
-            // napms(120); // Pausa para mostrar la espada
+            espadaso(stdscr, offset_x + x, offset_y + y, last_dir);
         }
-
-        mover_personaje(x, y, ch, COLS, LINES);
 
         if (x == coin_x && y == coin_y) {
-            reproducirMoneda(); // Reproduce el sonido de la moneda
-            napms(500);         // Pausa breve para permitir que el sonido de la moneda se reproduzca
-            reproducirFondo();  // Reanuda el sonido de fondo
+            reproducirMoneda();
+            napms(500);
+            reproducirFondo();
             score++;
-            coin_x = rand() % (COLS - 2) + 1;
-            coin_y = rand() % (LINES - 2) + 1;
+            // Nueva moneda en un espacio libre
+            do {
+                coin_x = rand() % COLUMNS;
+                coin_y = rand() % ROWS;
+            } while (laberinto[coin_y][coin_x] != 0);
         }
+        mover_personaje(x, y, ch, COLUMNS, ROWS);
     }
 
     // Menú de confirmación para guardar partida al salir
