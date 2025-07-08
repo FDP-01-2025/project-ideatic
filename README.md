@@ -69,6 +69,7 @@ Carnet: 00252225
 ## Instrucciones de Ejecución
 Clona este repositorio en tu máquina local:
 git clone [URL del repositorio]
+[Portada del juego](Captura de pantalla 2025-07-07 233548.png)
 
 
 
