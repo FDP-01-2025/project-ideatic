@@ -72,15 +72,15 @@ void loading(WINDOW *win)
     {
         for (char c : message2[j])
         {
-            wprintw(win, "%n", c);
-            napms(50);
+            wprintw(win, "%c", c); // o "%c", b o "%c", c
+            wrefresh(win);
         }
     }
     napms(300);
     wclear(win);
     wrefresh(win);
 }
-void finalmessagelevel1(WINDOW * win)
+void finalmessagelevel1(WINDOW *win)
 {
     napms(1000);
     wclear(win);
@@ -93,15 +93,17 @@ void finalmessagelevel1(WINDOW * win)
         wprintw(win, "\n");
         for (char b : message3[i])
         {
-            wprintw(win, "%n", b);
+            wprintw(win, "%c", b);
+            wrefresh(win);
             napms(50);
         }
         napms(300);
     }
     napms(300);
     wclear(win);
+    wrefresh(win);
 }
-void finalmessage2(WINDOW* win)
+void finalmessage2(WINDOW *win)
 {
     napms(500);
     wclear(win);
@@ -114,8 +116,8 @@ void finalmessage2(WINDOW* win)
         cout << endl;
         for (char b : message3[i])
         {
-            wprintw(win, "%n", b);
-            napms(50);
+            wprintw(win, "%c", b); 
+            wrefresh(win);
         }
         napms(300);
     }

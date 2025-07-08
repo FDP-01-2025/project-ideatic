@@ -89,6 +89,7 @@ void puntos()
     const int ENEMY_SPEED = 3; // Mueven cada 3 ciclos
     int nivel = 1;
     int enemigos_en_nivel = NUM_ENEMIGOS;
+    int objetivo_score = 1; // Empieza en 1 moneda para el primer nivel
     while (1)
     {
         clear();
@@ -161,27 +162,44 @@ void puntos()
         }
 
         // Verifica si el jugador ha ganado
-        if (score >= 1)
+        if (score >= objetivo_score)
         {
-            clear();
-            // mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Felicidades! ¡Ganaste el nivel %d!", nivel);
-            
-            refresh();
-            nodelay(stdscr, FALSE);
-            getch();
-            nodelay(stdscr, TRUE);
+            // Mostrar mensaje según el nivel
+            if (nivel == 1) {
+                finalmessagelevel1(stdscr);
+            } else if (nivel == 2) {
+                level3message(stdscr);
+            } else if (nivel == 3) {
+                // Puedes crear y llamar a otro mensaje, por ejemplo:
+                // finalmessagelevel2(stdscr);
+                loading(stdscr); // O usa loading si no tienes otro mensaje
+            } else {
+                loading(stdscr);
+            }
+
+            // Espera a que el usuario presione 'z' para continuar
+            int tecla;
+            do {
+                tecla = getch();
+            } while (tecla != 'z' && tecla != 'Z');
+
+            loading(stdscr); // Muestra mensaje de "loading" antes de avanzar
 
             avanzar_nivel(score, x, y, nivel, enemigos_en_nivel, laberinto, enemigos, coin_x, coin_y);
-            continue; // Reinicia el ciclo principal con el nuevo nivel
+
+            objetivo_score++; // Ahora en el siguiente nivel necesitas una moneda más
+            continue;
         }
 
         refresh();
 
         ch = getch();
-        if (ch == 'q' || ch == 'Q') {
+        if (ch == 'q' || ch == 'Q')
+        {
             // Menú de confirmación para guardar partida al salir
             bool salir = menu_guardar_partida(x, y, score, balls, MAX_BALLS);
-            if (salir) {
+            if (salir)
+            {
                 break; // Sale del bucle y termina el juego
             }
             // Si NO quiere salir (presionó 'r'), simplemente sigue el bucle y el juego continúa
@@ -214,8 +232,6 @@ void puntos()
         enemy_tick++; // Incrementa el contador de ciclos
     }
 
-
-  
     // Si retorna true, continúa y termina el juego normalmente
     endwin();
 }
