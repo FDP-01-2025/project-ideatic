@@ -16,6 +16,9 @@ int ch = 0, score = 0;
 Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
 int laberinto[ROWS][COLUMNS];
 Enemy enemigos[NUM_ENEMIGOS];
+Boss jefe;
+// Ball balls[MAX_BALLS];
+int boss_player_x, boss_player_y, boss_ch, boss_last_dir, boss_player_lives;
 
 void espadaso(WINDOW *win, int x, int y, int last_dir);
 
@@ -170,25 +173,27 @@ void puntos()
             } else if (nivel == 2) {
                 level3message(stdscr);
             } else if (nivel == 3) {
-                // Puedes crear y llamar a otro mensaje, por ejemplo:
-                // finalmessagelevel2(stdscr);
-                loading(stdscr); // O usa loading si no tienes otro mensaje
+                loading(stdscr);
+                jugar_jefe();
+                finalmessagelevel1(stdscr);
+                break; // o return;
             } else {
                 loading(stdscr);
             }
 
-            // Espera a que el usuario presione 'z' para continuar
-            int tecla;
-            do {
-                tecla = getch();
-            } while (tecla != 'z' && tecla != 'Z');
+            // Espera a que el usuario presione 'z' para continuar (solo para niveles < 3)
+            if (nivel < 3) {
+                int tecla;
+                do {
+                    tecla = getch();
+                } while (tecla != 'z' && tecla != 'Z');
 
-            loading(stdscr); // Muestra mensaje de "loading" antes de avanzar
+                loading(stdscr); // Muestra mensaje de "loading" antes de avanzar
 
-            avanzar_nivel(score, x, y, nivel, enemigos_en_nivel, laberinto, enemigos, coin_x, coin_y);
-
-            objetivo_score++; // Ahora en el siguiente nivel necesitas una moneda más
-            continue;
+                avanzar_nivel(score, x, y, nivel, enemigos_en_nivel, laberinto, enemigos, coin_x, coin_y);
+                objetivo_score++; // Ahora en el siguiente nivel necesitas una moneda más
+                continue;
+            }
         }
 
         refresh();

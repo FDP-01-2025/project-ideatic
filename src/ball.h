@@ -11,6 +11,7 @@
 struct Ball
 {
     int x, y, dx, dy;
+    int dir;
     bool active;
     int frame;
 };
