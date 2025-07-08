@@ -7,6 +7,7 @@
 #include "labyrinth.h" // Incluye las funciones del laberinto
 #include "constants.h" // Incluye las constantes ROWS y COLUMNS
 #include "enemy.h"
+#include "message.h"
 
 #define MOVER_H
 int x = 10, y = 5;
@@ -86,6 +87,8 @@ void puntos()
     int offset_y = 1, offset_x = 1;
     int enemy_tick = 0;        // Contador para el movimiento de enemigos
     const int ENEMY_SPEED = 3; // Mueven cada 3 ciclos
+    int nivel = 1;
+    int enemigos_en_nivel = NUM_ENEMIGOS;
     while (1)
     {
         clear();
@@ -158,14 +161,18 @@ void puntos()
         }
 
         // Verifica si el jugador ha ganado
-        if (score >= 5)
+        if (score >= 1)
         {
             clear();
-            mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Felicidades! ¡Ganaste el nivel!");
+            // mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Felicidades! ¡Ganaste el nivel %d!", nivel);
+            
             refresh();
             nodelay(stdscr, FALSE);
             getch();
-            break; // Sale del bucle y termina el juego
+            nodelay(stdscr, TRUE);
+
+            avanzar_nivel(score, x, y, nivel, enemigos_en_nivel, laberinto, enemigos, coin_x, coin_y);
+            continue; // Reinicia el ciclo principal con el nuevo nivel
         }
 
         refresh();

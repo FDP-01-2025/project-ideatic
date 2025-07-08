@@ -34,4 +34,5 @@ void level1message(WINDOW *win)
     wrefresh(win);
     napms(150); // Pausa final
 }
+
 #endif // MESSAGE_H
