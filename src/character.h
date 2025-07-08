@@ -166,7 +166,6 @@ void puntos()
         // Verifica si el jugador ha ganado
         if (score >= 1)
         {
-<<<<<<< HEAD
             clear();
             // mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Felicidades! ¡Ganaste el nivel %d!", nivel);
             
@@ -177,35 +176,6 @@ void puntos()
 
             avanzar_nivel(score, x, y, nivel, enemigos_en_nivel, laberinto, enemigos, coin_x, coin_y);
             continue; // Reinicia el ciclo principal con el nuevo nivel
-=======
-            // Mostrar mensaje según el nivel
-            if (nivel == 1) {
-                finalmessagelevel1(stdscr);
-            } else if (nivel == 2) {
-                level3message(stdscr);
-            } else if (nivel == 3) {
-                loading(stdscr);
-                jugar_jefe();
-                finalmessagelevel1(stdscr);
-                break; // o return;
-            } else {
-                loading(stdscr);
-            }
-
-            // Espera a que el usuario presione 'z' para continuar (solo para niveles < 3)
-            if (nivel < 3) {
-                int tecla;
-                do {
-                    tecla = getch();
-                } while (tecla != 'z' && tecla != 'Z');
-
-                loading(stdscr); // Muestra mensaje de "loading" antes de avanzar
-
-                avanzar_nivel(score, x, y, nivel, enemigos_en_nivel, laberinto, enemigos, coin_x, coin_y);
-                objetivo_score++; // Ahora en el siguiente nivel necesitas una moneda más
-                continue;
-            }
->>>>>>> 39aac533ca957eb1bbc5644260d63a56a31b9eac
         }
 
         refresh();
