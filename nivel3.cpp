@@ -22,10 +22,9 @@ void level1message()
     string message1 = "Congratulations! You've made it to level 3 :D";
     string message2 = "Now you must defeat the enemy of this level to move on to the last one.";
     string message3 ="Good luck!, see you at the next level";
-    string message4 = "Good luck!, see you at the next level";
 
-    string message[] = {message1, message2, message3, message4};
-    for (int i = 0; i < 4; i++)
+    string message[] = {message1, message2, message3};
+    for (int i = 0; i < 3; i++)
     {
         cout << endl;
         for (char a : message[i])
