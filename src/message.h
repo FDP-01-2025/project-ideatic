@@ -175,7 +175,11 @@ void finalmessagelevel1(WINDOW * win)
     string message3[] = {message, message1, message2};
     for (int i = 0; i < 3; i++)
     {
+<<<<<<< HEAD
         string << endl;
+=======
+        wprintw(win, "\n");
+>>>>>>> b5b201d8b066d64b3c4c6133df8d11f8dae5c45c
         for (char b : message3[i])
         {
             wprintw(win, "%n", b);
