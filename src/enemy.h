@@ -95,7 +95,7 @@ void avanzar_nivel(int &score, int &x, int &y, int &nivel, int &enemigos_en_nive
     if (enemigos_en_nivel > 30)
         enemigos_en_nivel = 30; // Límite máximo
 
-    generarLaberinto(laberinto);
+    generateLabyrinth(laberinto);
     generar_enemigos(enemigos, enemigos_en_nivel, laberinto);
     for (int j = 0; j < enemigos_en_nivel; j++)
     {

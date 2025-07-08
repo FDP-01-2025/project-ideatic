@@ -10,7 +10,7 @@
 #define LAB_DENSITY 150
 
 // Genera un laberinto en la matriz recibida (1 = muro, 0 = camino)
-inline void generarLaberinto(int matriz[ROWS][COLUMNS]) {
+inline void generateLabyrinth(int matriz[ROWS][COLUMNS]) {
     int walls = LAB_DENSITY * 6;
 
     // Inicializa los bordes como muros y el interior como caminos
