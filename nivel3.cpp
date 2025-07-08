@@ -1,29 +1,60 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstdlib>
+#include <windows.h>
+#include <conio.h>
 #include <ctime> //para generar valores aleatorios, en este caso, los laberintos xd.
 using namespace std;
+void cleanscreen()
+{
+    system("cls");
+}
 
-void homescreen()
+// para esperar cierto tiempo entre cada texto que se mostrara
+void waitscreen(int milliseconds)
 {
-    cout << "Welcome to Lost city :D" << endl;
-    cout << "press enter to continue" << endl;
+    Sleep(milliseconds);
 }
-void showmenu()
+void level1message()
 {
-    cout << "|-----------------------------|" << endl;
-    cout << "|            MENU             |" << endl;
-    cout << "| Select a option to continue |" << endl;
-    cout << "|          1. Play            |" << endl;
-    cout << "|       2. Show levels        |" << endl;
-    cout << "|          3. Exit            |" << endl;
-    cout << "|        4. Save game         |" << endl;
-    cout << "|-----------------------------|" << endl;
+    waitscreen(1100);
+    cleanscreen();
+    string message1 = "Congratulations! You've made it to level 3 :D";
+    string message2 = "Now you must defeat the enemy of this level to move on to the last one.";
+    string message3 ="Good luck!, see you at the next level";
+
+    string message[] = {message1, message2, message3};
+    for (int i = 0; i < 3; i++)
+    {
+        cout << endl;
+        for (char a : message[i])
+        {
+            cout << a;
+            waitscreen(50);
+        }
+        waitscreen(800);
+    }
+    cleanscreen();
+    waitscreen(175);
 }
-void level1()
+void loading()
 {
-    cout << "                LEVEL 1           " << endl;
-    cout << "Use the rows to move and to attack" << endl;
+    waitscreen(1000);
+    cleanscreen();
+    string message = "loading";
+    string message1 = "...";
+    string message2[] = {message, message1};
+
+    for (int j = 0; j < 2; j++)
+    {
+        for (char c : message2[j])
+        {
+            cout << c;
+            waitscreen(50);
+        }
+    }
+    waitscreen(300);
+    cleanscreen();
 }
 
 #define rows 15    // numero de filas que tendra la matriz para el laberint
@@ -92,11 +123,11 @@ void showlabyrinth(int matriz[rows][columns])
         {
             if (matriz[i][j] == 1)
             {
-                cout << "##";
+                cout << "██";
             }
             else
             {
-                cout << "  ";
+                cout << "░░";
             }
         }
         cout << endl;
@@ -108,11 +139,10 @@ int main()
 
     int lab[rows][columns];
 
-    //homescreen();
-    //showmenu();
+    // homescreen();
+    // showmenu();
     generatelab(lab);
     showlabyrinth(lab);
 
     return 0;
 }
-
