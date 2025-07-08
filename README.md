@@ -3,15 +3,18 @@
 
 ## Descripción y ambientacion del Proyecto
 
-Un aventurero explora una pirámide en busca de una ciudad perdida y su tesoro legendario, el jugador debe superar cuatro niveles llenos de trampas, acertijos y enemigos elementales, usando solo tres vidas. A medida que avanza, desbloquea mejoras y habilidades que lo ayudan a sobrevivir. El objetivo es llegar al corazón de la pirámide, donde un antiguo misterio lo espera.
+Un aventurero explora una pirámide en busca de una ciudad perdida y su tesoro legendario, el jugador debe superar cuatro niveles para poder salir de la piramide. A medida que avanza, tendrá que recoger monedas y esquivar a los enemigos para poder pasar al siguiente nivel.
 
-Nivel 1 – Guardián del Agua: El jugador se enfrenta a un entorno húmedo y traicionero, donde deberá esquivar trampas, recolectar monedas y derrotar a un enemigo hecho de agua para avanzar.
+Las monedas aydurán al jugador a poder avanzar en cada nivel. :D
 
-Nivel 2 – Derrumbe: La pirámide comienza a colapsar. El jugador debe escapar entre escombros mientras enfrenta al Hombre de Arena para poder pasar de nivel.
+Nivel 1: El jugador deberá de recoger una moneda esquivando a los enemigos para poder pasar al siguiente nivel.
 
-Nivel 3 – Lava: El jugador debe recolectar más monedas y sobrevivir a un terreno volcánico para seguir y pelear con el villano para poder pasar de nivel.
+Nivel 2: En este nivel deberá de recoger dos monedas esquivando a los enemigos para poder pasar al siguiente nivel.
 
-Nivel 4 – Escarabajo de Oro: En el gran final, el jugador atraviesa un recorrido que reúne todos los peligros anteriores.Solo si el jugador usa correctamente los objetos recolectados y actúa con inteligencia, podrá alcanzar el tesoro oculto al final de la pirámide.
+Nivel 3 – El jugador deberá de recoger 3 monedas esquivando a los enemigos para poder pasar al siguiente nivel.
+
+Nivel 4: En este ultimo nivel, el jugador deberá de recoger las ultimas monedas que lo ayudarán a poder vencer al ultimo nivel.
+
 
 ## Mecánica principal
 - Movimiento con flechas: El jugador se mueve usando las flechas del teclado (↑ ↓ ← →) esquivando trampas y buscando salidas.
