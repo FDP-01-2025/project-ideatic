@@ -41,7 +41,8 @@ void inicial()
     }
 
     // Posición inicial de la moneda: SOLO en un espacio libre
-    do {
+    do
+    {
         coin_x = rand() % COLUMNS;
         coin_y = rand() % ROWS;
     } while (laberinto[coin_y][coin_x] != 0);
@@ -49,7 +50,8 @@ void inicial()
     generarLaberinto(laberinto); // PRIMERO genera el laberinto
 
     // Luego busca una posición libre para la moneda
-    do {
+    do
+    {
         coin_x = rand() % COLUMNS;
         coin_y = rand() % ROWS;
     } while (laberinto[coin_y][coin_x] != 0);
@@ -82,8 +84,8 @@ void puntos()
 {
     int last_dir = KEY_RIGHT;
     int offset_y = 1, offset_x = 1;
-    int enemy_tick = 0; // Contador para el movimiento de enemigos
-    const int ENEMY_SPEED = 3; // Mueven cada 3 ciclos (ajusta a tu gusto)
+    int enemy_tick = 0;        // Contador para el movimiento de enemigos
+    const int ENEMY_SPEED = 3; // Mueven cada 3 ciclos
     while (1)
     {
         clear();
@@ -117,14 +119,17 @@ void puntos()
 
         update_balls(stdscr, balls, MAX_BALLS, offset_x, offset_y);
         // Mueve los enemigos antes de dibujarlos
-        if (enemy_tick % ENEMY_SPEED == 0) {
+        if (enemy_tick % ENEMY_SPEED == 0)
+        {
             mover_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
         }
         dibujar_enemigos(stdscr, enemigos, NUM_ENEMIGOS, offset_x, offset_y);
 
         // Verifica colisión con enemigos
-        for (int i = 0; i < NUM_ENEMIGOS; i++) {
-            if (enemigos[i].active && enemigos[i].x == x && enemigos[i].y == y) {
+        for (int i = 0; i < NUM_ENEMIGOS; i++)
+        {
+            if (enemigos[i].active && enemigos[i].x == x && enemigos[i].y == y)
+            {
                 // Mensaje de derrota y reinicio
                 clear();
                 mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Has perdido! Presiona una tecla para reiniciar...");
@@ -134,14 +139,17 @@ void puntos()
                 nodelay(stdscr, TRUE);
                 // Reinicia variables principales
                 score = 0;
-                x = 10; y = 5;
+                x = 10;
+                y = 5;
                 generarLaberinto(laberinto);
                 generar_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
-                for (int j = 0; j < NUM_ENEMIGOS; j++) {
+                for (int j = 0; j < NUM_ENEMIGOS; j++)
+                {
                     enemigos[j].dir = (rand() % 2 == 0) ? 1 : -1;
                     enemigos[j].active = true;
                 }
-                do {
+                do
+                {
                     coin_x = rand() % COLUMNS;
                     coin_y = rand() % ROWS;
                 } while (laberinto[coin_y][coin_x] != 0);
@@ -150,7 +158,8 @@ void puntos()
         }
 
         // Verifica si el jugador ha ganado
-        if (score >= 5) {
+        if (score >= 5)
+        {
             clear();
             mvprintw(ROWS / 2, (COLUMNS - 10) / 2, "¡Felicidades! ¡Ganaste el nivel!");
             refresh();
@@ -162,8 +171,14 @@ void puntos()
         refresh();
 
         ch = getch();
-        if (ch == 'q' || ch == 'Q')
-            break;
+        if (ch == 'q' || ch == 'Q') {
+            // Menú de confirmación para guardar partida al salir
+            bool salir = menu_guardar_partida(x, y, score, balls, MAX_BALLS);
+            if (salir) {
+                break; // Sale del bucle y termina el juego
+            }
+            // Si NO quiere salir (presionó 'r'), simplemente sigue el bucle y el juego continúa
+        }
         if (ch == ' ')
         {
             shoot_ball(balls, MAX_BALLS, x, y, last_dir);
@@ -192,20 +207,9 @@ void puntos()
         enemy_tick++; // Incrementa el contador de ciclos
     }
 
-    // Menú de confirmación para guardar partida al salir
-    nodelay(stdscr, FALSE); // Asegura que getch espere la entrada
-    clear();
-    printw("Do you want to save the game? (y/n): ");
-    refresh();
-    int save_opt = getch();
-    if (save_opt == 'y' || save_opt == 'Y')
-    {
-        save_game("save.txt", x, y, score, balls, MAX_BALLS);
-        printw("\nGame saved!\n");
-        refresh();
-        napms(1000);
-    }
 
+  
+    // Si retorna true, continúa y termina el juego normalmente
     endwin();
 }
 // Dibuja una espada al lado del personaje según la dirección

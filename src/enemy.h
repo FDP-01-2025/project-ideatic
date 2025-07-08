@@ -4,14 +4,15 @@
 #include "constants.h"
 #include <curses.h>
 
-// Estructura para un enemigo con dirección
+// Estructura para un enemigo con dirección y tipo de movimiento
 struct Enemy {
     int x, y;
-    int dir; // 1 para derecha, -1 para izquierda
+    int dir;      // 1 o -1
+    bool vertical; // true = movimiento vertical, false = horizontal
     bool active;
 };
 
-#define NUM_ENEMIGOS 5
+#define NUM_ENEMIGOS 10
 // Declaración global del arreglo de enemigos
 extern Enemy enemigos[NUM_ENEMIGOS];
 
@@ -24,6 +25,8 @@ inline void generar_enemigos(Enemy enemigos[], int cantidad, int laberinto[ROWS]
         if (laberinto[ey][ex] == 0) {
             enemigos[generados].x = ex;
             enemigos[generados].y = ey;
+            enemigos[generados].dir = (rand() % 2 == 0) ? 1 : -1;
+            enemigos[generados].vertical = (rand() % 2 == 0); // Aleatorio: vertical u horizontal
             enemigos[generados].active = true;
             generados++;
         }
@@ -44,12 +47,23 @@ inline void dibujar_enemigos(WINDOW* win, Enemy enemigos[], int cantidad, int of
 inline void mover_enemigos(Enemy enemigos[], int cantidad, int laberinto[ROWS][COLUMNS]) {
     for (int i = 0; i < cantidad; i++) {
         if (!enemigos[i].active) continue;
-        int nx = enemigos[i].x + enemigos[i].dir;
-        // Si hay muro o borde, cambia de dirección
-        if (nx < 0 || nx >= COLUMNS || laberinto[enemigos[i].y][nx] == 1) {
-            enemigos[i].dir *= -1;
+        int nx = enemigos[i].x;
+        int ny = enemigos[i].y;
+        if (enemigos[i].vertical) {
+            ny += enemigos[i].dir;
+            // Si hay muro o borde, cambia de dirección
+            if (ny < 0 || ny >= ROWS || laberinto[ny][nx] == 1) {
+                enemigos[i].dir *= -1;
+            } else {
+                enemigos[i].y = ny;
+            }
         } else {
-            enemigos[i].x = nx;
+            nx += enemigos[i].dir;
+            if (nx < 0 || nx >= COLUMNS || laberinto[ny][nx] == 1) {
+                enemigos[i].dir *= -1;
+            } else {
+                enemigos[i].x = nx;
+            }
         }
     }
 }
