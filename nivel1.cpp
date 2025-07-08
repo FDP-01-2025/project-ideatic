@@ -22,8 +22,7 @@ void waitscreen(int milliseconds)
 void homescreen()
 {
     cout << "Welcome to Lost city :D" << endl;
-    cout << "press enter to continue" << endl;
-    waitscreen(900);
+    waitscreen(5000);
     cleanscreen();
 }
 // para mostrar el menu
@@ -209,8 +208,9 @@ bool win(int matriz[rows][columns])
     bool win = false;
     bool play = true;
     // bool win = false;
-    while (play)
+    while (true)
     {
+        system("cls");
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
@@ -237,9 +237,9 @@ bool win(int matriz[rows][columns])
                 if (key == 72)
                     newPlayer2--;
                 else if (key == 80)
-                    newPlayer2++;
+                    newPlayer2++; //para que el personaje se mueva para abajo
                 else if (key == 75)
-                    newPlayer--;
+                    newPlayer--;// para que se pueda mover para arriba
                 else if (key == 77)
                     newPlayer++;
                 if (matriz[newPlayer2][newPlayer] == 0)
@@ -250,16 +250,17 @@ bool win(int matriz[rows][columns])
             }
             else if (key == 'q' || key == 'Q')
             {
-                break;
+                return false;
             }
             if (player2 == rows - 2 && player1 == columns)
             {
-                win = true;
-                break;
+                return true;
+        
             }
         }
+        //return win;
     }
-    return win;
+    
 }
 
 int main()
@@ -270,9 +271,9 @@ int main()
     SetConsoleOutputCP(CP_UTF8); // para poder tener el mismo formato de simbolos en las computadoras.
     // pantalla prncipal y menu
     homescreen();
-    waitscreen(2100);
+    waitscreen(5000);
     showmenu();
-    waitscreen(1000);
+    waitscreen(5000);
     int option;
    
     cout << "Select a option to continue: ";
@@ -286,8 +287,8 @@ int main()
         level1message();
         loading();
         generatelab(lab);
-        // waitscreen();
-        bool levelgained = win;
+
+        bool levelgained = win(lab);
         if (win)
         {
             finalmessagelevel1();
@@ -296,7 +297,6 @@ int main()
         {
             finalmessage2();
         }
-        break;
         // case 2:
     }
 
