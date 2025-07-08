@@ -14,10 +14,10 @@ int x = 10, y = 5;
 int coin_x, coin_y;
 int ch = 0, score = 0;
 Ball balls[MAX_BALLS] = {}; // Arreglo de bolas
-int maze[ROWS][COLUMNS];
-Enemy enemies[NUM_ENEMIGOS];
+int laberinto[ROWS][COLUMNS];
+Enemy enemigos[NUM_ENEMIGOS];
 
-void sword(WINDOW *win, int x, int y, int last_dir);
+void espadaso(WINDOW *win, int x, int y, int last_dir);
 
 void inicial()
 {
@@ -34,11 +34,11 @@ void inicial()
     srand(time(NULL));
 
     // Generar enemigos en posiciones libres del laberinto
-    generar_enemigos(enemies, NUM_ENEMIGOS, maze);
+    generar_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
     for (int i = 0; i < NUM_ENEMIGOS; i++)
     {
-        enemies[i].dir = (rand() % 2 == 0) ? 1 : -1; // Dirección inicial aleatoria
-        enemies[i].active = true;
+        enemigos[i].dir = (rand() % 2 == 0) ? 1 : -1; // Dirección inicial aleatoria
+        enemigos[i].active = true;
     }
 
     // Posición inicial de la moneda: SOLO en un espacio libre
@@ -46,16 +46,16 @@ void inicial()
     {
         coin_x = rand() % COLUMNS;
         coin_y = rand() % ROWS;
-    } while (maze[coin_y][coin_x] != 0);
+    } while (laberinto[coin_y][coin_x] != 0);
     // reproducirFondo();
-    generateLabyrinth(maze); // PRIMERO genera el laberinto
+    generarLaberinto(laberinto); // PRIMERO genera el laberinto
 
     // Luego busca una posición libre para la moneda
     do
     {
         coin_x = rand() % COLUMNS;
         coin_y = rand() % ROWS;
-    } while (maze[coin_y][coin_x] != 0);
+    } while (laberinto[coin_y][coin_x] != 0);
 
     // ...resto del código...
 }
@@ -74,7 +74,7 @@ void mover_personaje(int &x, int &y, int ch, int ancho, int alto)
     else if (ch == KEY_RIGHT && x < ancho - 2)
         nx++;
     // Solo mueve si no hay muro
-    if (maze[ny][nx] == 0)
+    if (laberinto[ny][nx] == 0)
     {
         x = nx;
         y = ny;
@@ -87,8 +87,8 @@ void puntos()
     int offset_y = 1, offset_x = 1;
     int enemy_tick = 0;        // Contador para el movimiento de enemigos
     const int ENEMY_SPEED = 3; // Mueven cada 3 ciclos
-    int level = 1;
-    int enemies_in_the_level = NUM_ENEMIGOS;
+    int nivel = 1;
+    int enemigos_en_nivel = NUM_ENEMIGOS;
     while (1)
     {
         clear();
@@ -109,7 +109,7 @@ void puntos()
         {
             for (int j = 0; j < COLUMNS; j++)
             {
-                if (maze[i][j] == 1)
+                if (laberinto[i][j] == 1)
                     mvaddch(offset_y + i, offset_x + j, '#');
             }
         }
@@ -124,14 +124,14 @@ void puntos()
         // Mueve los enemigos antes de dibujarlos
         if (enemy_tick % ENEMY_SPEED == 0)
         {
-            mover_enemigos(enemies, NUM_ENEMIGOS, maze);
+            mover_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
         }
-        dibujar_enemigos(stdscr, enemies, NUM_ENEMIGOS, offset_x, offset_y);
+        dibujar_enemigos(stdscr, enemigos, NUM_ENEMIGOS, offset_x, offset_y);
 
         // Verifica colisión con enemigos
         for (int i = 0; i < NUM_ENEMIGOS; i++)
         {
-            if (enemies[i].active && enemies[i].x == x && enemies[i].y == y)
+            if (enemigos[i].active && enemigos[i].x == x && enemigos[i].y == y)
             {
                 // Mensaje de derrota y reinicio
                 clear();
@@ -144,18 +144,18 @@ void puntos()
                 score = 0;
                 x = 10;
                 y = 5;
-                generateLabyrinth(maze);
-                generar_enemigos(enemies, NUM_ENEMIGOS, maze);
+                generarLaberinto(laberinto);
+                generar_enemigos(enemigos, NUM_ENEMIGOS, laberinto);
                 for (int j = 0; j < NUM_ENEMIGOS; j++)
                 {
-                    enemies[j].dir = (rand() % 2 == 0) ? 1 : -1;
-                    enemies[j].active = true;
+                    enemigos[j].dir = (rand() % 2 == 0) ? 1 : -1;
+                    enemigos[j].active = true;
                 }
                 do
                 {
                     coin_x = rand() % COLUMNS;
                     coin_y = rand() % ROWS;
-                } while (maze[coin_y][coin_x] != 0);
+                } while (laberinto[coin_y][coin_x] != 0);
                 continue; // Reinicia el ciclo principal
             }
         }
@@ -171,7 +171,7 @@ void puntos()
             getch();
             nodelay(stdscr, TRUE);
 
-            avanzar_nivel(score, x, y, level, enemies_in_the_level, maze, enemies, coin_x, coin_y);
+            avanzar_nivel(score, x, y, nivel, enemigos_en_nivel, laberinto, enemigos, coin_x, coin_y);
             continue; // Reinicia el ciclo principal con el nuevo nivel
         }
 
@@ -194,7 +194,7 @@ void puntos()
             last_dir = ch;
         if (ch == 'x' || ch == 'X')
         {
-            sword(stdscr, offset_x + x, offset_y + y, last_dir);
+            espadaso(stdscr, offset_x + x, offset_y + y, last_dir);
         }
 
         if (x == coin_x && y == coin_y)
@@ -208,7 +208,7 @@ void puntos()
             {
                 coin_x = rand() % COLUMNS;
                 coin_y = rand() % ROWS;
-            } while (maze[coin_y][coin_x] != 0);
+            } while (laberinto[coin_y][coin_x] != 0);
         }
         mover_personaje(x, y, ch, COLUMNS, ROWS);
         enemy_tick++; // Incrementa el contador de ciclos
@@ -220,7 +220,7 @@ void puntos()
     endwin();
 }
 // Dibuja una espada al lado del personaje según la dirección
-void sword(WINDOW *win, int x, int y, int last_dir)
+void espadaso(WINDOW *win, int x, int y, int last_dir)
 {
     wattron(win, COLOR_PAIR(3)); // Activa color cian
     // last_dir es la última dirección (KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT)
