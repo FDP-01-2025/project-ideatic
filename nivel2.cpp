@@ -4,56 +4,56 @@
 #include <windows.h>
 using namespace std;
 
-void esperar(int milisegundos) {
-    Sleep(milisegundos);
+void wait(int milliseconds) {
+    Sleep(milliseconds);
 }
 
-void limpiarPantalla() {
+void clearScreen() {
     system("cls");
 }
 
-void mensajeOscuridad() {
-    limpiarPantalla();
+void darknessMessage() {
+    clearScreen();
 
-    string linea1 = "Has logrado avanzar... pero";
-    string linea2 = "has abierto una puerta que puede que nunca logres cerrar.";
-    string linea3 = " ";
-    string linea4 = "Lo oculto despierta cuando el polvo cae.";
-    string linea5 = "Solo quien lee entre las sombras encuentra la salida.";
+    string line1 = "You have managed to advance... but";
+    string line2 = "you have opened a door that you may never be able to close.";
+    string line3 = " ";
+    string line4 = "The hidden awakens when the dust falls.";
+    string line5 = "Only those who read in the shadows find the exit.";
 
-    string mensaje[] = { linea1, linea2, linea3, linea4, linea5 };
+    string message[] = { line1, line2, line3, line4, line5 };
 
     for (int l = 0; l < 5; l++) {
         cout << "\n\n";
-        for (char c : mensaje[l]) {
+        for (char c : message[l]) {
             cout << c;
-            esperar(20);
+            wait(20);
         }
-        esperar(800);
+        wait(800);
     }
-    esperar(150);
-    limpiarPantalla();
+    wait(150);
+    clearScreen();
 }
 
-void mostrarAdvertenciaLaberinto() {
+void showLabyrinthWarning() {
     cout << "\n\n";
     cout << "╔══════════════════════════════════════════════════════════════════════╗\n";
-    cout << "║                         ⚠ ADVERTENCIA ⚠                             4 ║\n";
+    cout << "║                         ⚠ WARNING ⚠                                4 ║\n";
     cout << "║                                                                      ║\n";
-    cout << "║             Este lugar no fue hecho para los vivos.                  ║\n";
-    cout << "║               El polvo que pisas... lo alimenta.                     ║\n";
+    cout << "║             This place was not made for the living.                  ║\n";
+    cout << "║               The dust you step on... feeds it.                      ║\n";
     cout << "║                                                                      ║\n";
-    cout << "║                 Él despierta con cada error.                         ║\n";
+    cout << "║                 He awakens with every mistake.                       ║\n";
     cout << "║                                                                      ║\n";
-    cout << "║            Cada error no te aleja... te acerca.                      ║\n";
+    cout << "║            Every mistake doesn't take you away... it brings you closer. ║\n";
     cout << "╚══════════════════════════════════════════════════════════════════════╝\n";
-    esperar(5000);
-    limpiarPantalla();
+    wait(5000);
+    clearScreen();
 }
 
-void finalmessagelevel1() {
-    esperar(1000);
-    limpiarPantalla();
+void finalMessageLevel1() {
+    wait(1000);
+    clearScreen();
     string message = "You've completed the level";
     string message1 = "but don't declare victory yet!";
     string message2 = "Press Z to move on to the next level";
@@ -63,33 +63,33 @@ void finalmessagelevel1() {
         cout << endl;
         for (char b : message3[i]) {
             cout << b;
-            esperar(50);
+            wait(50);
         }
-        esperar(300);
+        wait(300);
     }
 
-    char tecla;
-    cout << "\n\nPresiona Z para continuar: ";
+    char key;
+    cout << "\n\nPress Z to continue: ";
     while (true) {
-        cin >> tecla;
-        tecla = toupper(tecla);
-        if (tecla == 'Z') {
+        cin >> key;
+        key = toupper(key);
+        if (key == 'Z') {
             break;
         } else {
-            cout << " Entrada inválida, por favor, presiona Z para continuar: ";
+            cout << " Invalid input, please press Z to continue: ";
         }
     }
 
-    esperar(300);
-    limpiarPantalla();
+    wait(300);
+    clearScreen();
 
-    cout << "\n Comienza el siguiente desafío, suerte.....\n";
-    esperar(1500);
+    cout << "\n The next challenge begins, good luck.....\n";
+    wait(1500);
 }
 
-void finalmessage2() {
-    esperar(1000);
-    limpiarPantalla();
+void finalMessage2() {
+    wait(1000);
+    clearScreen();
     string message = "You lost :(";
     string message1 = "Try again to move on to the next level";
     string message2 = "Don't get discouraged :D!";
@@ -99,28 +99,28 @@ void finalmessage2() {
         cout << endl;
         for (char b : message3[i]) {
             cout << b;
-            esperar(50);
+            wait(50);
         }
-        esperar(300);
+        wait(300);
     }
-    esperar(300);
-    limpiarPantalla();
+    wait(300);
+    clearScreen();
 }
 
 const int ROWS = 15;
 const int COLUMNS = 60;
 const int DENSITY = 150;
 
-void gLabyrinthLevel2(bool gano) {
-    int matriz[ROWS][COLUMNS];
+void gLabyrinthLevel2(bool won) {
+    int matrix[ROWS][COLUMNS];
     int walls = DENSITY * 6;
 
     for (int a = 0; a < ROWS; a++) {
         for (int b = 0; b < COLUMNS; b++) {
             if (a == 0 || b == 0 || a == ROWS - 1 || b == COLUMNS - 1) {
-                matriz[a][b] = 1;
+                matrix[a][b] = 1;
             } else {
-                matriz[a][b] = 0;
+                matrix[a][b] = 0;
             }
         }
     }
@@ -131,7 +131,7 @@ void gLabyrinthLevel2(bool gano) {
         cl = (cl / 2) * 2;
         int rw = rand() % (ROWS - 4) + 2;
         rw = (rw / 2) * 2;
-        matriz[rw][cl] = 1;
+        matrix[rw][cl] = 1;
 
         for (int d = 0; d < walls; d++) {
             int mc[4] = {cl, cl, cl + 2, cl - 2};
@@ -139,12 +139,12 @@ void gLabyrinthLevel2(bool gano) {
             int ran = rand() % 4;
 
             if (mr[ran] >= 0 && mr[ran] < ROWS && mc[ran] >= 0 && mc[ran] < COLUMNS) {
-                if (matriz[mr[ran]][mc[ran]] == 0) {
-                    matriz[mr[ran]][mc[ran]] = 1;
+                if (matrix[mr[ran]][mc[ran]] == 0) {
+                    matrix[mr[ran]][mc[ran]] = 1;
                     int midrow = mr[ran] + (rw - mr[ran]) / 2;
                     int midcolum = mc[ran] + (cl - mc[ran]) / 2;
                     if (midrow >= 0 && midrow < ROWS && midcolum >= 0 && midcolum < COLUMNS)
-                        matriz[midrow][midcolum] = 1;
+                        matrix[midrow][midcolum] = 1;
                 }
             }
         }
@@ -152,7 +152,7 @@ void gLabyrinthLevel2(bool gano) {
 
     for (int e = 0; e < ROWS; e++) {
         for (int f = 0; f < COLUMNS; f++) {
-            if (matriz[e][f] == 1) {
+            if (matrix[e][f] == 1) {
                 cout << "██";
             } else {
                 cout << "░░";
@@ -161,25 +161,25 @@ void gLabyrinthLevel2(bool gano) {
         cout << "\n";
     }
 
-    esperar(1500);
+    wait(1500);
 
-    if (gano) {
-        finalmessagelevel1();
+    if (won) {
+        finalMessageLevel1();
     } else {
-        finalmessage2();
+        finalMessage2();
     }
 }
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    mensajeOscuridad();
-    mostrarAdvertenciaLaberinto();
+    darknessMessage();
+    showLabyrinthWarning();
 
-    // Simula si el jugador gana o pierde (de forma aleatoria)
+    // simulates whether the player wins or loses (randomly)
     srand(time(NULL));
-    bool gano = rand() % 2 == 0; // true o false aleatoriamente
+    bool won = rand() % 2 == 0; // true or false randomly
 
-    gLabyrinthLevel2(gano);
+    gLabyrinthLevel2(won);
 
     return 0;
 }
