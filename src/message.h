@@ -90,7 +90,7 @@ void finalmessagelevel1(WINDOW * win)
     string message3[] = {message, message1, message2};
     for (int i = 0; i < 3; i++)
     {
-        cout << endl;
+        wprintw(win, "\n");
         for (char b : message3[i])
         {
             wprintw(win, "%n", b);
